@@ -1,0 +1,161 @@
+----------------------------------------------------------------
+07/28/2020 13:47:57 - Program initialized.
+07/28/2020 13:47:58 - Update Cirlce Request Made.
+07/28/2020 13:48:02 - Selected Camera ITMY4
+07/28/2020 13:48:02 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 13:48:16 - Current Image Inputed by User L1_CAM_IMTY_Test_0.tiff
+07/28/2020 13:48:16 - Deduced Inputed Image Path Test Images/L1_CAM_IMTY_Test_0.tiff
+07/28/2020 13:48:16 - Could not Find Input Image Test Images/L1_CAM_IMTY_Test_0.tiff
+07/28/2020 13:48:26 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 13:48:26 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 13:48:26 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 13:49:14 - Image Optimization Successfull.
+07/28/2020 13:49:22 - Optimization approved by user.
+----------------------------------------------------------------
+07/28/2020 17:30:38 - Program initialized.
+07/28/2020 17:31:08 - Update Cirlce Request Made.
+07/28/2020 17:31:16 - Selected Camera ITMY4
+07/28/2020 17:31:16 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:31:35 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:31:35 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:31:35 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:32:26 - Image Optimization Successfull.
+07/28/2020 17:32:41 - Optimization approved by user.
+07/28/2020 17:32:47 - SVG replacement approved by the user.
+----------------------------------------------------------------
+07/28/2020 17:33:40 - Program initialized.
+07/28/2020 17:33:40 - Update Cirlce Request Made.
+07/28/2020 17:33:44 - Selected Camera ITMY4
+07/28/2020 17:33:44 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:33:55 - Current Image Inputed by User L1_CAM_ITMY_Test_1.tiff
+07/28/2020 17:33:55 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 17:33:55 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 17:34:41 - Image Optimization Successfull.
+07/28/2020 17:34:48 - Optimization approved by user.
+07/28/2020 17:34:52 - SVG replacement approved by the user.
+----------------------------------------------------------------
+07/28/2020 17:35:45 - Program initialized.
+07/28/2020 17:35:46 - Update Cirlce Request Made.
+07/28/2020 17:35:48 - Selected Camera ITMY4
+07/28/2020 17:35:48 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:36:02 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:36:02 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:36:02 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:36:51 - Image Optimization Successfull.
+07/28/2020 17:36:55 - Optimization approved by user.
+07/28/2020 17:37:01 - SVG replacement approved by the user.
+----------------------------------------------------------------
+07/28/2020 17:37:46 - Program initialized.
+07/28/2020 17:37:47 - Update Cirlce Request Made.
+07/28/2020 17:37:49 - Selected Camera ITMY4
+07/28/2020 17:37:49 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:38:00 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:38:00 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:38:00 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:38:50 - Image Optimization Successfull.
+07/28/2020 17:38:57 - Optimization approved by user.
+07/28/2020 17:39:00 - SVG replacement approved by the user.
+07/28/2020 17:39:01 - Old svg backed up as archive/L1_CAM_ITMY4.svg07_28_2020 17_39_01.bak
+07/28/2020 17:39:01 - Failure to rename file temp/ITMY4_temp.svg as svg_Destination/L1_CAM_temp/ITMY4.svg
+07/28/2020 17:39:01 - Failure to replace svg files.
+----------------------------------------------------------------
+07/28/2020 17:41:50 - Program initialized.
+07/28/2020 17:41:51 - Update Cirlce Request Made.
+07/28/2020 17:41:54 - Selected Camera ITMY4
+07/28/2020 17:41:54 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:42:23 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:42:23 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:42:23 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:43:13 - Image Optimization Successfull.
+07/28/2020 17:43:23 - Optimization approved by user.
+07/28/2020 17:43:25 - SVG replacement approved by the user.
+07/28/2020 17:43:26 - Old svg backed up as archive/L1_CAM_ITMY4.svg07_28_2020 17_43_26.bak
+07/28/2020 17:43:26 - New svg successfully put in place as svg_Destination/L1_CAM_temp.svg
+07/28/2020 17:43:26 - Circle update successfull.
+----------------------------------------------------------------
+07/28/2020 17:46:49 - Program initialized.
+07/28/2020 17:46:50 - Update Cirlce Request Made.
+07/28/2020 17:46:53 - Selected Camera ITMY4
+07/28/2020 17:46:53 - Reference Image Imported Default Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:47:07 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:47:07 - Deduced Inputed Image Path Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:47:07 - Input Image Successfully Imported Test Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:47:58 - Image Optimization Successfull.
+07/28/2020 17:48:20 - Optimization approved by user.
+07/28/2020 17:48:25 - SVG replacement approved by the user.
+07/28/2020 17:48:35 - Old svg backed up as archive/L1_CAM_ITMY4.svg07_28_2020 17_48_35.bak
+07/28/2020 17:48:35 - New svg successfully put in place as svg_Destination/L1_CAM_temp.svg
+07/28/2020 17:48:35 - Circle update successfull.
+----------------------------------------------------------------
+07/28/2020 17:54:26 - Program initialized.
+07/28/2020 17:54:27 - Update Cirlce Request Made.
+07/28/2020 17:54:32 - Unknown Camera Specified: 'ITMY4'
+07/28/2020 17:54:37 - Selected Camera ITMY4
+07/28/2020 17:54:37 - Reference Image Imported Default_Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:55:21 - Current Image Inputed by User L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:55:21 - Deduced Inputed Image Path Test_Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:55:21 - Input Image Successfully Imported Test_Images/L1_CAM_ITMY_Test_0.tiff
+07/28/2020 17:56:11 - Image Optimization Successfull.
+07/28/2020 17:56:24 - Optimization approved by user.
+07/28/2020 17:56:29 - SVG replacement approved by the user.
+07/28/2020 17:56:44 - Old svg backed up as archive/L1_CAM_ITMY4.svg_07_28_2020 17_56_44.bak
+07/28/2020 17:56:44 - New svg successfully put in place as svg_Destination/L1_CAM_ITMY4.svg
+07/28/2020 17:56:44 - Circle update successfull.
+----------------------------------------------------------------
+07/28/2020 17:57:18 - Program initialized.
+07/28/2020 17:57:19 - Update Cirlce Request Made.
+07/28/2020 17:57:32 - Selected Camera ITMY4
+07/28/2020 17:57:32 - Reference Image Imported Default_Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 17:57:44 - Current Image Inputed by User L1_CAM_ITMY_Test_1.tiff
+07/28/2020 17:57:44 - Deduced Inputed Image Path Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 17:57:44 - Input Image Successfully Imported Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 17:58:30 - Image Optimization Successfull.
+07/28/2020 17:58:55 - Optimization approved by user.
+07/28/2020 17:58:59 - SVG replacement not approved by the user.
+----------------------------------------------------------------
+07/28/2020 18:00:15 - Program initialized.
+07/28/2020 18:00:18 - Program exited by user.
+----------------------------------------------------------------
+07/28/2020 18:00:21 - Program initialized.
+07/28/2020 18:00:21 - Update Cirlce Request Made.
+07/28/2020 18:00:25 - Selected Camera ITMY4
+07/28/2020 18:00:25 - Reference Image Imported Default_Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 18:00:35 - Current Image Inputed by User L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:00:35 - Deduced Inputed Image Path Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:00:35 - Input Image Successfully Imported Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:01:20 - Image Optimization Successfull.
+07/28/2020 18:02:38 - Optimization approved by user.
+07/28/2020 18:03:45 - SVG replacement not approved by the user.
+----------------------------------------------------------------
+07/28/2020 18:03:48 - Program initialized.
+07/28/2020 18:03:49 - Update Cirlce Request Made.
+07/28/2020 18:03:53 - Selected Camera ITMY4
+07/28/2020 18:03:53 - Reference Image Imported Default_Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 18:04:15 - Current Image Inputed by User L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:04:15 - Deduced Inputed Image Path Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:04:15 - Input Image Successfully Imported Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:05:01 - Image Optimization Successfull.
+07/28/2020 18:05:09 - Optimization approved by user.
+----------------------------------------------------------------
+07/28/2020 18:05:38 - Program initialized.
+07/28/2020 18:05:39 - Update Cirlce Request Made.
+07/28/2020 18:05:48 - Selected Camera ITMY4
+07/28/2020 18:05:49 - Reference Image Imported Default_Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 18:06:20 - Current Image Inputed by User L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:06:20 - Deduced Inputed Image Path Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:06:20 - Input Image Successfully Imported Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:07:05 - Image Optimization Successfull.
+07/28/2020 18:07:12 - Optimization approved by user.
+07/28/2020 18:07:28 - Program exited by user.
+----------------------------------------------------------------
+07/28/2020 18:07:30 - Program initialized.
+07/28/2020 18:07:32 - Update Cirlce Request Made.
+07/28/2020 18:08:32 - Selected Camera ITMY4
+07/28/2020 18:08:32 - Reference Image Imported Default_Images/ITMY4/ITMY4_Original.tiff
+07/28/2020 18:08:40 - Current Image Inputed by User L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:08:40 - Deduced Inputed Image Path Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:08:40 - Input Image Successfully Imported Test_Images/L1_CAM_ITMY_Test_1.tiff
+07/28/2020 18:09:26 - Image Optimization Successfull.
+07/28/2020 18:09:38 - Optimization approved by user.
+07/28/2020 18:09:42 - SVG replacement approved by the user.
+07/28/2020 18:09:51 - Program exited by user.
