@@ -4,8 +4,10 @@ from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 #Package for timinig processes
 from datetime import datetime
+import time
 #Package for executing terminal commands
 import os
+import sys
 #Package for reading ini file
 import configparser
 #Opening and Reading config file
@@ -14,9 +16,13 @@ config.read('config.ini')
 #Assigning variables
 xshape = eval(config["Configurations"]["xshape"])
 yshape = eval(config["Configurations"]["yshape"])
-iniPixels = eval(config["Configurations"]["iniPixels"])
+inixRange = eval(config["Configurations"]["inixRange"])
+iniyRange = eval(config["Configurations"]["iniyRange"])
+inithRange = eval(config["Configurations"]["inithRange"])
+iniRes = eval(config["Configurations"]["iniRes"])
 iniStd = eval(config["Configurations"]["iniStd"])
 iniThreshold = eval(config["Configurations"]["iniThreshold"])
+iniNormalization = eval(config["Configurations"]["iniNormalization"])
 archivePath = config["Configurations"]["archivePath"]
 defaultPath = config["Configurations"]["defaultPath"]
 shotsPath = config["Configurations"]["shotsPath"]
@@ -34,28 +40,37 @@ def cleanPixels(image):
     for i in range(len(imarray)):
         for j in range(len(imarray[i])):
             #Changes the value to 255 or 0 depending on the value of the pixel and the threshold specified.
-            if imarray[i][j] >= iniThreshold:
-                imarray[i][j] = 255
-            else:
+            if imarray[i][j] < iniThreshold:
                 imarray[i][j] = 0
+            else:
+                imarray[i][j] = 255
     return Image.fromarray(imarray)
-def gaussianSmooth(image):
+
+def gaussianSmooth(image, start = 0):
     """
     Returns a copy of the image where every pixel acts as the peak of a gaussian with standard deviation "iniStd".
     """
+    if start == 0:
+        start = datetime.now()
     #Turns image into 2d array of values
     imarray = np.array(image)
     #Creates an array of zeroes of same shape and dimensions as the image array
     gaussianArray = np.zeros(imarray.shape)
     #runs through the image array
-    totalNonZeroes = sum(imarray.flatten())/255
+    totalNonZeroes = 0
+    for i in range(len(imarray)):
+        for j in range(len(imarray[i])):
+            if imarray[i][j] > 0:
+                totalNonZeroes += 1
     count = 0
     for i in range(len(imarray)):
         os.system("clear")
         print("Processing Input Image.")
-        pct = 100.*count/totalNonZeroes
-        #print(str("%0.2f" % pct) + "%")
-        print(progressBar(pct))
+        try:
+            pct = 100.*count/totalNonZeroes
+        except:
+            pct = 0
+        print(progressBar(pct, time0 = start))
         for j in range(len(imarray[i])):
             #If a particular pixel value is non-zero
             if imarray[i][j] > 0:
@@ -63,7 +78,8 @@ def gaussianSmooth(image):
                 #Runs through every pixel of the array of zeroes and calculates the value as if a gaussian peaked at (i,j). Adds that value to the new array.
                 for m in range(len(gaussianArray)):
                     for n in range(len(gaussianArray[m])):
-                        gaussianArray[m][n] += np.exp(-(((m-i)/xshape)**2 + ((n-j)/yshape)**2)/(2*iniStd**2))
+                        gaussianArray[m][n] += imarray[i][j]/255*np.exp(-(((m-i)/xshape)**2 + ((n-j)/yshape)**2)/(2*iniStd**2))
+    gaussianArray = gaussianArray/(max(gaussianArray.flatten()))*iniNormalization
     return Image.fromarray(gaussianArray)
 
 def imgOverlay(img1, img2):
@@ -94,55 +110,10 @@ def imgDifference(img1, img2):
             total += dif[i][j]
     return total/(255*xshape*yshape)
 
-def imgTransform(image, transformation, pixels, center = [0,0]):
-    """
-    Returns a version of the image transformed.
-    Rotations require a center to be rotated about, default is 0,0. The image will be rotated by 2*pixel/(shapex+shapey) radians.
-    Translation will translate the image by "pixels".
-    """
-    temp = image
-    if transformation == "RC":
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, -center[0], 0, 1, 0))
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, 0, 0, 1, center[1]))
-        temp = temp.rotate(-4*pixels/(xshape + yshape)*180/np.pi)
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, center[0], 0, 1, 0))
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, 0, 0, 1, -center[1]))
-    elif transformation == "RCC":
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, -center[0], 0, 1, 0))
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, 0, 0, 1, center[1]))
-        temp = temp.rotate(4*pixels/(xshape + yshape)*180/np.pi)
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, center[0], 0, 1, 0))
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, 0, 0, 1, -center[1]))
-    elif transformation == "TR":
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, -pixels, 0, 1, 0))
-    elif transformation == "TL":
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, pixels, 0, 1, 0))
-    elif transformation == "TU":
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, 0, 0, 1, pixels))
-    elif transformation == "TD":
-        temp = temp.transform(temp.size, Image.AFFINE, (1, 0, 0, 0, 1, -pixels))
-    return temp
-
-def makeTestImage(originalImage, allowedOperations = ["RC","RCC","TU","TD","TL","TR"]):
-    """
-    Returns a copy of the original image after applying a random set of transformations.
-    """
-    #Randomizes a number of transformations
-    ntrans = np.random.randint(5,20)
-    #Randomly chooses a number "Ntransformations" of transformations out of the possible ones
-    trans = np.random.choice(allowedOperations, ntrans)
-    #Randomly determines the magnitudes (in pixels) of each transformation.
-    mags = np.random.choice(range(20), ntrans)
-    img = originalImage
-    #Runs thorugh the transformations and applies each
-    for i in range(len(trans)):
-        img = imgTransform(img,trans[i],mags[i])
-    return img
-
 def replaceSVG(svgNew, svgOld):
     backedUp = False
     try:
-        newFilePath = archivePath + '/' + svgOld.split("/")[-1] + '_' + datetime.now().strftime("%m_%d_%Y %H_%M_%S")+".bak"
+        newFilePath = archivePath + '/' + svgOld.split("/")[-1][:-5] + '_' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S")+".tiff"
         os.rename(svgOld, newFilePath)
         print("Old svg backed up as " + newFilePath)
         writeToLog("Old svg backed up as " + newFilePath)
@@ -166,82 +137,67 @@ def replaceSVG(svgNew, svgOld):
     else:
         return False
         
-def optimizeImg(providedImage, cameraName):
-    moves = [["RC"],["RCC"],["TU"],["TD"],["TL"],["TR"]]
-    start = datetime.now()
-    recordedMoves = []
-    recordedPixels = []
-    recordedDiffs = []
-    pixelIntensity = iniPixels
-    print("Importing Target Image.")
-    imgTarget = Image.open(defaultPath + "/" + cameraName + "/" + cameraName + "_Overlayed.tiff")
-    os.system("clear")
-    print("Importing Input Image.")
-    imgInput = Image.open(providedImage)
-    os.system("clear")
-    print("Cleaning Input Image")
-    imgInput_Clean = cleanPixels(imgInput)
-    os.system("clear")
-    print("Processing Input Image.")
-    imgInput_Smoothed = gaussianSmooth(imgInput_Clean)
-    imgInput_Overlayed = imgOverlay(imgInput_Clean,imgInput_Smoothed)
-    imgOutput_Overlayed = imgInput_Overlayed
-    os.system("clear")
-    print("Optimizing")
-    oneMore = False
-        
-    while pixelIntensity > 0:
-        diffs = []
-        for move in moves:
-            imgTemp = imgOutput_Overlayed
-            for transf in move:
-                imgTemp = imgTransform(imgTemp, transf, pixelIntensity)
-            diffs += [imgDifference(imgTarget, imgTemp)]
-        argMinDiff = np.argmin(diffs)
-        recordedMoves += moves[argMinDiff]
-        recordedPixels += [pixelIntensity]
-        recordedDiffs += [np.min(diffs)]
-        for transf in moves[argMinDiff]:
-            imgOutput_Overlayed = imgTransform(imgOutput_Overlayed, transf, pixelIntensity)
-        os.system("clear")
-        print("Optimizing")
-        print("Image Difference: " + str(np.min(diffs)) + "\nTransformations so far: " + str(recordedMoves) + "\nPixel Resolution: " + str(pixelIntensity))
-        if oneMore:
-            oneMore = False
-            pixelIntensity -= 1
-        if len(recordedDiffs) > 1 and recordedDiffs[-1] >= recordedDiffs[-2]:
-            oneMore = True
-    imgOutput = imgInput
-    for i in range(len(recordedMoves)):
-        imgOutput = imgTransform(imgOutput, recordedMoves[i], recordedPixels[i])
-    end = datetime.now()
-    os.system("clear")
-    print("Done!")
-    print("Total Processing Time: " + str((end-start).total_seconds()) + " seconds.")
-    return recordedMoves, recordedPixels, imgTarget, imgOutput_Overlayed
+def replaceReferenceSVG(svgNew, svgOld):
+    backedUp = False
+    try:
+        newFilePath = archivePath + '/' + svgOld.split("/")[-1][:-4] + '_' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S")+".svg"
+        os.rename(svgOld, newFilePath)
+        print("Old svg backed up as " + newFilePath)
+        writeToLog("Old svg backed up as " + newFilePath)
+        backedUp = True
+    except:
+        print("Could not backup file " + svgOld)
+        writeToLog("Failure to backup file " + svgOld + " to " + newFilePath)
+    if backedUp:
+        newFileInPlace = False
+        try:
+            newFilePath2 = svgsPath + '/' + "L1_CAM_" + svgNew.split("/")[-1].split("_")[0] + ".svg"
+            os.rename(svgNew, newFilePath2)
+            print("New svg put in place as " + newFilePath2)
+            writeToLog("New svg successfully put in place as " + newFilePath2)
+            return True
+        except:
+            print("Could not put new SVG file in place as " + newFilePath2)
+            writeToLog("Failure to rename file " + svgNew + ' to ' + newFilePath2)
+            return False
+            
+    else:
+        return False
+  
+def replaceReferenceTiff(tiffNew, tiffOld):
+    backedUp = False
+    try:
+        newFilePath = archivePath + '/' + tiffOld.split("/")[-1] + '_' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S") +".bak"
+        os.rename(tiffOld, newFilePath)
+        print("Old reference tiff backed up as " + newFilePath)
+        writeToLog("Old reference tiff backed up as " + newFilePath)
+        backedUp = True
+    except:
+        print("Could not backup file " + tiffOld)
+        writeToLog("Failure to backup file " + tiffOld + " to " + newFilePath)
+    if backedUp:
+        newFileInPlace = False
+        try:
+            newFilePath2 = defaultPath + '/' + "L1_CAM_" + tiffNew.split("/")[-1]
+            os.rename(tiffNew, newFilePath2)
+            print("New reference tiff put in place as " + newFilePath2)
+            writeToLog("New reference tiff successfully put in place as " + newFilePath2)
+            return True
+        except:
+            print("Could not put new reference tiff file in place as " + newFilePath2)
+            writeToLog("Failure to rename file " + tiffNew + ' to ' + newFilePath2)
+            return False
+            
+    else:
+        return False
+ 
 
-def transformPoint(point, moves, pixels):
-    moves = moves[::-1]
-    pixels = pixels[::-1]
-    for i in range(len(moves)):
-        #Move opposite to undo transformations
-        if moves[i] == "TU":
-            point[1] -= pixels[i]
-        elif moves[i] == "TD":
-            point[1] += pixels[i]
-        elif moves[i] == "TR":
-            point[0] -= pixels[i]
-        elif moves[i] == "TL":
-            point[0] += pixels[i]
-        elif moves[i] == "RC":
-            pointTemp = point
-            point[0] = pointTemp[0]*np.cos(-4*pixels[i]/(xshape + yshape)) - pointTemp[1]*np.sin(-4*pixels[i]/(xshape + yshape))
-            point[1] = pointTemp[1]*np.cos(-4*pixels[i]/(xshape + yshape)) + pointTemp[0]*np.sin(-4*pixels[i]/(xshape + yshape))
-        elif moves[i] == "RCC":
-            pointTemp = point
-            point[0] = pointTemp[0]*np.cos(4*pixels[i]/(xshape + yshape)) - pointTemp[1]*np.sin(4*pixels[i]/(xshape + yshape))
-            point[1] = pointTemp[1]*np.cos(4*pixels[i]/(xshape + yshape)) + pointTemp[0]*np.sin(4*pixels[i]/(xshape + yshape))
-    return point[0], point[1]
+def transformPoint(point, params):
+    x = params[0]
+    y = params[1]
+    th = params[2]
+    pointTemp = point
+    return [pointTemp[0]*np.cos(th) - pointTemp[1]*np.sin(th) + x, pointTemp[0]*np.sin(th) + pointTemp[1]*np.cos(th) + y]
 
 def getPointsSVG(svgFilename):
     cx = 0
@@ -292,8 +248,9 @@ def getPointsSVG(svgFilename):
             foundLine = True
     return cx, cy, r, l1x1, l1y1, l1x2, l1y2, l2x1, l2y1, l2x2, l2y2
 
-def transformSVG(svgFilename, cameraName, recMoves, recPixels):
+def transformSVG(svgFilename, cameraName, transf):
     cx, cy, r, l1x1, l1y1, l1x2, l1y2, l2x1, l2y1, l2x2, l2y2 = getPointsSVG(svgFilename)
+    """
     cx = cx - xshape/2
     cy = -cy + yshape/2
     l1x1 = l1x1 - xshape/2
@@ -304,11 +261,13 @@ def transformSVG(svgFilename, cameraName, recMoves, recPixels):
     l2y1 = -l2y1 + yshape/2
     l2x2 = l2x2 - xshape/2
     l2y2 = -l2y2 + yshape/2
-    cx, cy = transformPoint([cx,cy], recMoves, recPixels)
-    l1x1, l1y1 = transformPoint([l1x1,l1y1], recMoves, recPixels)
-    l1x2, l1y2 = transformPoint([l1x2,l1y2], recMoves, recPixels)
-    l2x1, l2y1 = transformPoint([l2x1,l2y1], recMoves, recPixels)
-    l2x2, l2y2 = transformPoint([l2x2,l2y2], recMoves, recPixels)
+    """
+    cx, cy = (transf@np.array([cx,cy,1]))[:2]
+    l1x1, l1y1 = (transf@np.array([l1x1, l1y1,1]))[:2]
+    l1x2, l1y2 = (transf@np.array([l1x2, l1y2,1]))[:2]
+    l2x1, l2y1 = (transf@np.array([l2x1, l2y1,1]))[:2]
+    l2x2, l2y2 = (transf@np.array([l2x2, l2y2,1]))[:2]
+    """
     cx = cx + xshape/2
     cy = -cy + yshape/2
     l1x1 = l1x1 + xshape/2
@@ -319,7 +278,7 @@ def transformSVG(svgFilename, cameraName, recMoves, recPixels):
     l2y1 = -l2y1 + yshape/2
     l2x2 = l2x2 + xshape/2
     l2y2 = -l2y2 + yshape/2
-    
+    """
     with open(svgFilename, 'r') as f:
         lines = f.read().split("\n")
     
@@ -362,18 +321,137 @@ def transformSVG(svgFilename, cameraName, recMoves, recPixels):
                 f.write(line+"\n")
     return tempPath + "/" + cameraName +"_temp.svg"
 
-def progressBar(pct):
+def progressBar(pct, time0 = 0):
+    time1 = datetime.now()
+    if time0 == 0:
+        eta = ''
+    else:
+        deltaT = (time1-time0).total_seconds()
+        try:
+            eta = 100.*deltaT/pct - deltaT
+        except:
+            eta = ''
     numberOfHashtags = int(pct/2) + 1
     numberOfdots = 50-numberOfHashtags
-    return "[" + "#"*numberOfHashtags + "."*numberOfdots + "]"
+    outString = "[" + "#"*numberOfHashtags + '.'*numberOfdots + '] '
+    if eta != '':
+        #outString += '(approx ' + '%0.2f' % eta + ' seconds)'
+        if eta/(60*60*24) > 0:
+            outString += '(approx > 1d)'
+        elif eta/(60*60) > 0:
+            outString += '(approx ' + time.strftime('%Hh %Mm %Ss', time.gmtime(eta)) +  ')'
+        elif eta/60 > 0:
+            outString += '(approx ' + time.strftime('%Mm %Ss', time.gmtime(eta)) +  ')'
+        else:
+            outString += '(approx ' + time.strftime('%Ss', time.gmtime(eta)) +  ')'
+    return outString
 
 def writeToLog(message):
     try:
         if message == 'break':
             with open("log.txt",'a') as f:
                 f.write("----------------------------------------------------------------\n")
+        elif message == '':
+            pass
         else:
             with open("log.txt",'a') as f:
-                f.write(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' - ' + message + "\n")
+                f.write(datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ' - ' + message + "\n")
     except:
         print("Could not open log file!")
+
+def promptUser(validAnswers, ErrorMessage, LogErrorMessage, forcedInput = ''):
+    if forcedInput == '':
+        userAnswer = input()
+    else:
+        userAnswer = forcedInput
+    while userAnswer not in validAnswers:
+        if userAnswer.lower() == 'exit':
+            writeToLog("Program exited by user.")
+            print('bye bye!')
+            os._exit(0)
+        elif userAnswer not in validAnswers:
+            print(ErrorMessage + " [" + userAnswer + "]")
+            writeToLog(LogErrorMessage + " [" + userAnswer + "]")
+            userAnswer = input()
+    return userAnswer
+
+def replaceReferenceTiff(cameraName, newTiffs):
+    start = datetime.now()
+    if isinstance(newTiffs, list):
+        print("Overlaying Input Images.")
+        newTiff_Original = Image.open(newTiffs[0])
+        for i in range(1,len(newTiffs)):
+            imgTemp = Image.open(newTiffs[i])
+            newTiff_Original = imgOverlay(newTiff_Original, imgTemp)
+    else:
+        newTiff_Original = Image.open(newTiffs)
+    newTiff_Original.show()
+    newTiff_Original.save(defaultPath + '/' + cameraName + '/' + cameraName + "_Original.tiff")
+    newTiff_Clean = cleanPixels(newTiff_Original)
+    newTiff_Clean.show()
+    newTiff_Clean.save(defaultPath + '/' + cameraName + '/' + cameraName + "_Clean.tiff")
+    newTiff_Smoothed = gaussianSmooth(newTiff_Clean, start = start)
+    newTiff_Overlayed = imgOverlay(newTiff_Clean, newTiff_Smoothed)
+    newTiff_Overlayed.save(defaultPath + '/' + cameraName + '/' + cameraName + "_Overlayed.tiff")
+    newTiff_Overlayed.show()
+ 
+def rotationMatrix(angle):
+    step1 = translationMatrix([xshape/2,yshape/2]).dot(np.array([[np.cos(angle), -np.sin(angle),0],[np.sin(angle),np.cos(angle),0],[0,0,1]]))
+    step2 = step1.dot(translationMatrix([-xshape/2,-yshape/2]))
+    return step2
+
+def translationMatrix(vec):
+    return np.array([[1,0,vec[0]],[0,1,vec[1]],[0,0,1]])
+
+def matrixToAffine(mat):
+    a = mat[0][0]
+    b = mat[0][1]
+    c = mat[0][2]
+    d = mat[1][0]
+    e = mat[1][1]
+    f = mat[1][2]
+    return (a,b,c,d,e,f)
+
+def minimizeDifference(img1, img2, rangex = inixRange, rangey = iniyRange, rangeth = inithRange, n = iniRes, cycles = 0, start = 0, minDiff = 1):
+    if cycles == 0:
+        start = datetime.now()
+    ncycles = cycles + int(np.ceil(np.log(rangex[1]-rangex[0])/(np.log(n)-np.log(2)))) - 1
+    if rangex[1] - rangex[0] < 1:
+        x = (rangex[1] + rangex[0])/2
+        y = (rangey[1] + rangey[0])/2
+        th = (rangeth[1] + rangeth[0])/2
+        print("Estimated x,y translation: " + str((x,y)) + " pixels.")
+        print("Estimated rotation: " + str(th) + " radians")
+        return rotationMatrix(th).dot(translationMatrix([x,y])), (x,y,th)
+    
+    xs = [i for i in np.linspace(rangex[0], rangex[1], n)]
+    ys = [j for j in np.linspace(rangey[0], rangey[1], n)]
+    ths = [k for k in np.linspace(rangeth[0], rangeth[1], n)]
+    transfs = []
+    for x in xs:
+        for y in ys:
+            for th in ths:
+                transfs += [[rotationMatrix(th).dot(translationMatrix([x,y])), (x,y,th)]]
+    
+    minDiff = 1
+    minDiffArg = 0
+    for i in range(len(transfs)):
+        os.system("clear")
+        print("Optimizing Cycles: " + str(cycles) + "/" + str(ncycles))
+        print("Least Difference so far: " + str(minDiff))
+        print("Precision: " + str(rangex[1] - rangex[0]) + " Pixels")
+        pct = 100./(ncycles)*cycles + 100./(ncycles)*i/len(transfs)
+        print(progressBar(pct, time0 = start))
+        diff = imgDifference(img1, img2.transform(img2.size, Image.AFFINE, matrixToAffine(transfs[i][0])))
+        if diff < minDiff:
+            minDiff = diff
+            minDiffArg = i
+    
+    args = transfs[minDiffArg][1]
+    spanx = rangex[1]-rangex[0]
+    spany = rangey[1]-rangey[0]
+    spanth = rangeth[1]-rangeth[0]
+    rangex = [args[0] - spanx/n, args[0] + spanx/n]
+    rangey = [args[1] - spany/n, args[1] + spany/n]
+    rangeth = [args[2] - spanth/n, args[2] + spanth/n]
+    return minimizeDifference(img1, img2, rangex = rangex, rangey = rangey, rangeth = rangeth, n = n, cycles = cycles + 1, start = start)
