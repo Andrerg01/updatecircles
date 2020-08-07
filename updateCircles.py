@@ -113,8 +113,7 @@ if menuChoice == '1':
     if isinstance(imageNames, list):
         inputImage = Image.open(imageNames[0])
         for i in range(1, len(imageNames)):
-            inputImage = Image.open(imageNames[i])
-            inputImage = imgOverlay(imgInput, imageNames[i])
+            inputImage = imgOverlay(inputImage, Image.open(imageNames[i]))
     else:
         inputImage = Image.open(imageNames)
     
@@ -196,7 +195,7 @@ elif menuChoice == '2':
         imageNames = input().split(' ')
     else:
         imageNames = inputImagesArg
-        
+    
     if imageNames[0].lower() == 'exit':
         writeToLog("Program exited by user.")
         print('bye bye!')
@@ -211,7 +210,6 @@ elif menuChoice == '2':
         fileOpen = False
         while not fileOpen:
             try:
-                print(imageNames[i])
                 Image.open(imageNames[i])
                 print("Input Image successfully imported.")
                 writeToLog("Input Image Successfully Imported " + imageNames[i])
@@ -227,19 +225,9 @@ elif menuChoice == '2':
                 elif '/' not in imageNames[i]:
                     writeToLog("Current Image Inputed by User " + imageNames[i])
                     imageNames[i] = shotsPath + '/' + imageNames[i]
-                    writeToLog("Deduced Inputed Image Path " + imageNames[i])
-    if isinstance(imageNames, list):
-        inputImage = Image.open(imageNames[0])
-        for i in range(1, len(imageNames)):
-            inputImage = Image.open(imageNames[i])
-            inputImage = imgOverlay(imgInput, imageNames[i])
-    else:
-        inputImage = Image.open(imageNames)
     
-    replaceReferenceTiff(cameraName, inputImagesArg)
+    replaceReferenceTiff(cameraName, imageNames)
     replaceReferenceSVG(cameraName, inputSvg)
-    
-    #if vectorArg:
-    #    replaceReferenceSVG(cameraName, inputSVGArg)
+
 else:
     print("This should not have happened, if you're reading this please contact me at aguima1@lsu.edu")

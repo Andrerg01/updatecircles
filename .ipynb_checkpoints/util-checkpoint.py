@@ -336,9 +336,9 @@ def progressBar(pct, time0 = 0):
     outString = "[" + "#"*numberOfHashtags + '.'*numberOfdots + '] '
     if eta != '':
         #outString += '(approx ' + '%0.2f' % eta + ' seconds)'
-        if eta/(60*60*24) > 0:
+        if eta/(60*60*24) > 1:
             outString += '(approx > 1d)'
-        elif eta/(60*60) > 0:
+        elif eta/(60*60) > 1:
             outString += '(approx ' + time.strftime('%Hh %Mm %Ss', time.gmtime(eta)) +  ')'
         elif eta/60 > 0:
             outString += '(approx ' + time.strftime('%Mm %Ss', time.gmtime(eta)) +  ')'
