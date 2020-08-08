@@ -7,6 +7,7 @@
 from util import *
 import argparse
 
+clear()
 writeToLog("break")
 writeToLog("Program initialized.")
 
@@ -29,13 +30,14 @@ args = parser.parse_args()
 #This will preceed almost every print and proceed every screen clearing.
 header = \
 """
-#####################################################
-#                 Update Circles.py                 #
-#       Version: No Clue                            #
-#       Author: Andre Guimaraes                     #
-#       License: Probably LSC or LSU or something   #
-#####################################################
+######################################################
+#                   Update Circles                   #
+#       Version: """ + version + " "*(36 - len(version)) + """#
+#       Author: """ + author + " "*(37 - len(author)) + """#
+#       License: Probably LSC or LSU or something    #
+######################################################
 """
+print(header)
 
 #If no update or replace option is specified, the user will be prompted as to what he/she wants the program to do
 if not args.update and not args.replace:
@@ -113,22 +115,13 @@ if args.update:
             writeToLog("SVG replacement approved by the user.")
             clear()
             print(header)
-            print('The file to be replaced is \"' + svgsPath + "/L1_CAM_" + args.camera + ".svg\"\nPress Enter to continue or specify correct file name.")
-            svgFileName = confirmVector(input(), bypass = '')
-            if svgFileName == '':
-                svgFileName = svgsPath + "/L1_CAM_" + args.camera + ".svg"
-                
-            if replaceSVG(newSVG, svgFileName):
-                header += "Cirlce update successfull!\n"
-                clear()
-                print(header)
-                print("Cirlce update successfull!")
-                writeToLog("Circle update successfull.")
-                exit()
-            else:
-                print("Could not replace svg files.")
-                writeToLog("Failure to replace svg files.")
-                exit()
+            old_SVG_name = svgsPath + "/L1_CAM_" + args.camera + ".svg"
+            print("The file to be replaced is \"" + oldSVG_Name + "\"\nPress Enter to continue or specify correct file name.")
+            alt_svg_Name = confirmVector(input(), bypass = '')
+            if alt_svg_Name != '':
+                old_SVG_name = alt_svg_Name
+            
+            replaceFiles(old_SVG_name, new_SVG_name)
             
         else:
             writeToLog("SVG replacement not approved by the user.")

@@ -10,6 +10,9 @@ import os
 import sys
 #Package for reading ini file
 import configparser
+#Package to get version number of program
+import subprocess
+
 #Opening and Reading config file
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -29,6 +32,8 @@ shotsPath = config["Configurations"]["shotsPath"]
 tempPath = config["Configurations"]["tempPath"]
 cameras = config["Configurations"]["cameras"].split(',')
 svgsPath = config["Configurations"]["svgsPath"]
+version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
+author = config["Configurations"]["author"]
 
 def cleanPixels(image):
     """
@@ -65,12 +70,12 @@ def gaussianSmooth(image, start = 0, header = ''):
     count = 0
     for i in range(len(imarray)):
         os.system("clear")
-        print("Processing Input Image.")
+        postHeader = "Applying Complete Gaussian Smoothing\n"
         try:
             pct = 100.*count/totalNonZeroes
         except:
             pct = 0
-        print(progressBar(pct, time0 = start, header = header))
+        print(progressBar(pct, time0 = start, header = header + postHeader))
         for j in range(len(imarray[i])):
             #If a particular pixel value is non-zero
             if imarray[i][j] > 0:
@@ -407,7 +412,7 @@ def replaceFiles(filename_Old, filename_New):
     
 def backupFile(filename):
     try:
-        filename_new =  + archivePath + "/" + filename.split("/")[-1].split(".")[0] + "_" + datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + filename.split("/")[-1].split(".")[-1]
+        filename_new = archivePath + "/" + filename.split("/")[-1].split(".")[0] + "_" + datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + filename.split("/")[-1].split(".")[-1]
         os.system("mv " + filename + " " + filename_new)
         writeToLog("Backed up file \"" + filename + "\" to \"" + filename_new + "\"" )
     except:
@@ -422,6 +427,7 @@ def rotationMatrix(angle):
 
 def translationMatrix(vec):
     return np.array([[1,0,vec[0]],[0,1,vec[1]],[0,0,1]])
+
 def matrixToAffine(mat):
     a = mat[0][0]
     b = mat[0][1]
