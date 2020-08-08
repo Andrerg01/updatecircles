@@ -5,27 +5,9 @@
 #For questions, contact me! aguima1@lsu.edu
 
 from util import *
-import argparse
 
-clear()
 writeToLog("break")
 writeToLog("Program initialized.")
-
-parser = argparse.ArgumentParser(description = 'Processes and Images')
-
-parser.add_argument('-c', '--camera', type = str, choices = cameras, metavar = '', help = 'The camera to be considered.')
-parser.add_argument('-i', '--images', type = str, nargs='+', metavar = '',  help = 'The image or images to be processed.')
-parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG file to be processed')
-
-verboseGroup = parser.add_mutually_exclusive_group()
-verboseGroup.add_argument('-q', '--quiet', action = 'store_true')
-verboseGroup.add_argument('-v', '--verbose', action = 'store_true')
-
-actionGroup = parser.add_mutually_exclusive_group()
-actionGroup.add_argument('-u', '--update', action = 'store_true')
-actionGroup.add_argument('-r', '--replace', action = 'store_true')
-
-args = parser.parse_args()
 
 #This will preceed almost every print and proceed every screen clearing.
 header = \
@@ -37,7 +19,7 @@ header = \
 #       License: Probably LSC or LSU or something    #
 ######################################################
 """
-print(header)
+if verbose: clear(); print(header)
 
 #If no update or replace option is specified, the user will be prompted as to what he/she wants the program to do
 if not args.update and not args.replace:
@@ -54,16 +36,14 @@ elif args.replace:
     writeToLog("Reference Update Request Made.")
     header += "Operation: Reference Image/SVG Replacement.\n"
     
-clear()
-print(header)
+if verbose: clear(); print(header)
 
 #If no camera is specified, the user will be prompted to the camera name
 if args.camera == None:
     args.camera = promptCamera()
 writeToLog("Camera selected: " + args.camera)
 header += "Camera selected: " + args.camera + "\n"
-clear()
-print(header)
+if verbose: clear(); print(header)
 
 #If no images are specified, the user will be prompted to the image paths
 if args.images == None:
@@ -73,8 +53,7 @@ else:
     args.images = confirmImages(inferPath(args.images))
 writeToLog("Input Images: " + str(args.images)[1:-1])
 header += "Input Images: \"" + str(args.images)[1:-1]+ "\"\n"
-clear()
-print(header)
+if verbose: clear(); print(header)
 
 if args.update:
     print("Importing Original Reference Image.")
@@ -87,39 +66,36 @@ if args.update:
     input_Image_Original = overlayImages(input_Images)
     print("Cleaning Combined Image.")
     input_Image_Clean = cleanPixels(input_Image_Original)
-    
+    reference_Image_Overlayed.show()
     print("Starting Optimization.")
     transf, params = minimizeDifference(reference_Image_Overlayed, input_Image_Clean, header = header)
     header += "Image Optimization Successfull!\n"
-    clear()
-    print(header)
+    if verbose: clear(); print(header)
     
     old_SVG_name = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
     new_SVG_name = transformSVG(old_SVG_name, args.camera, transf)
     
-    drawImageAndSVG(reference_Image_Original, old_SVG_name, args.camera)
-    drawImageAndSVG(input_Image_Original, new_SVG_name, args.camera)
+    drawImageAndSVG(reference_Image_Original, old_SVG_name, args.camera, text = "Reference (Target)")
+    drawImageAndSVG(input_Image_Original, new_SVG_name, args.camera, text = "Current (Input)")
     
     reference_Image_Original.show()
     input_Image_Original.show()
-    clear()
-    print(header)
+    if verbose: clear(); print(header)
     approvedSVG = promptSVGApproval()
     
     if approvedSVG:
         writeToLog("Optimization approved by user.")
-        clear()
-        print(header)
+        if verbose: clear(); print(header)
         approvedSVGUpdate = promptSVGUpdateApproval()
         if approvedSVGUpdate:
             writeToLog("SVG replacement approved by the user.")
-            clear()
-            print(header)
+            if verbose: clear(); print(header)
             old_SVG_name = svgsPath + "/L1_CAM_" + args.camera + ".svg"
-            print("The file to be replaced is \"" + oldSVG_Name + "\"\nPress Enter to continue or specify correct file name.")
-            alt_svg_Name = confirmVector(input(), bypass = '')
-            if alt_svg_Name != '':
-                old_SVG_name = alt_svg_Name
+            if not (args.yes or args.quiet):
+                print("The file to be replaced is \"" + oldSVG_Name + "\"\nPress Enter to continue or specify correct file name.")
+                alt_svg_Name = confirmVector(input(), bypass = '')
+                if alt_svg_Name != '':
+                    old_SVG_name = alt_svg_Name
             
             replaceFiles(old_SVG_name, new_SVG_name)
             
@@ -140,11 +116,11 @@ elif args.replace:
     writeToLog("Input SVG: \"" + args.vector + "\"")
     header += "Input SVG: \"" + args.vector + "\"\n"
     
-    print("Importing Input Images.")
+    if verbose: print("Importing Input Images.")
     input_Images = [Image.open(img) for img in args.images]
-    print("Combining Input Images.")
+    if verbose: print("Combining Input Images.")
     input_Image_Original = overlayImages(input_Images)
-    print("Cleaning Combined Image.")
+    if verbose: print("Cleaning Combined Image.")
     input_Image_Clean = cleanPixels(input_Image_Original)
     input_Image_Smoothed = gaussianSmooth(input_Image_Clean, header = header)
     input_Image_Overlayed = overlayImages([input_Image_Smoothed, input_Image_Clean])
@@ -160,17 +136,18 @@ elif args.replace:
     newTiffName = tempPath + "/" + args.camera + "_Original.tiff"
     oldTiffName = defaultPath + "/" + args.camera + "/" + args.camera + "_Original.tiff"
     temp.save(newTiffName)
-    replaceFiles(oldTiffname, newTiffName)
+    replaceFiles(oldTiffName, newTiffName)
     
     temp = input_Image_Overlayed
     newTiffName = tempPath + "/" + args.camera + "_Overlayed.tiff"
     oldTiffName = defaultPath + "/" + args.camera + "/" + args.camera + "_Overlayed.tiff"
     temp.save(newTiffName)
-    replaceFiles(oldTiffname, newTiffName)
+    replaceFiles(oldTiffName, newTiffName)
 
     newSVGName = args.vector
     oldSVGName = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
-    replaceFiles(oldSVGName, newSVGName)
+    if newSVGName != oldSVGName:
+        replaceFiles(oldSVGName, newSVGName)
 
 
 else:

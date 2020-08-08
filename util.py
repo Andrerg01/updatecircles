@@ -12,6 +12,8 @@ import sys
 import configparser
 #Package to get version number of program
 import subprocess
+#Package to manage passed arguments from the command line
+import argparse
 
 #Opening and Reading config file
 config = configparser.ConfigParser()
@@ -35,9 +37,38 @@ svgsPath = config["Configurations"]["svgsPath"]
 version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
 author = config["Configurations"]["author"]
 
+#Defining arguments
+parser = argparse.ArgumentParser(description = 'Processes and Images')
+
+parser.add_argument('-c', '--camera', type = str, choices = cameras, metavar = '', help = 'The camera to be considered.')
+parser.add_argument('-i', '--images', type = str, nargs='+', metavar = '',  help = 'The image or images to be processed.')
+parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG file to be processed')
+parser.add_argument('-q', '--quiet', action = 'store_true')
+parser.add_argument('-y', '--yes', action = 'store_true')
+
+actionGroup = parser.add_mutually_exclusive_group()
+actionGroup.add_argument('-u', '--update', action = 'store_true')
+actionGroup.add_argument('-r', '--replace', action = 'store_true')
+
+args = parser.parse_args()
+verbose = not args.quiet
+
 def cleanPixels(image):
     """
-    Retunrs a copy of the image changing the value of pixels in the image above or below a given threshold to 255 or 0.
+    Docstring:
+    Changes value of pixels in the image above or below `iniThreshold` threshold to 255 or 0.
+
+    Parameters
+    ----------
+    image : `PIL.Image`
+        PIL Image to be cleaned
+
+    Returns
+    -------
+    image :  `PIL.Image`
+        The cleaned image
+
+    Type: method
     """
     #Turns image into 2d array of values
     imarray = np.array(image)
@@ -51,11 +82,35 @@ def cleanPixels(image):
                 imarray[i][j] = 255
     return Image.fromarray(imarray)
 
-def gaussianSmooth(image, start = 0, header = ''):
+def gaussianSmooth(image, start = None, header = ''):
     """
-    Returns a copy of the image where every pixel acts as the peak of a gaussian with standard deviation "iniStd".
+    Docstring:
+    Smooths an image as if every pixel acts as the peak of a gaussian with standard deviation `iniStd`.
+
+    Parameters
+    ----------
+    image : `PIL.Image`
+        PIL Image to be smoothed.
+
+    start : `int`, optional
+        Start time of the operation for calculating ETA. If none given, it will assume the time when the function executes.
+
+    header: `str`, optional
+        A header to be displayed before the progress bar.
+
+    Returns
+    -------
+    image :  `PIL.Image`
+        The smoothed image
+
+    Notes
+    -----
+    Takes very long depending on the number of non-zero pixels (between 30~90 minutes on most images).
+
+    Type: method
     """
-    if start == 0:
+
+    if start == None:
         start = datetime.now()
     #Turns image into 2d array of values
     imarray = np.array(image)
@@ -75,7 +130,7 @@ def gaussianSmooth(image, start = 0, header = ''):
             pct = 100.*count/totalNonZeroes
         except:
             pct = 0
-        print(progressBar(pct, time0 = start, header = header + postHeader))
+        if verbose: print(progressBar(pct, time0 = start, header = header + postHeader))
         for j in range(len(imarray[i])):
             #If a particular pixel value is non-zero
             if imarray[i][j] > 0:
@@ -114,89 +169,7 @@ def imgDifference(img1, img2):
             dif[i][j] = abs(dif[i][j])
             total += dif[i][j]
     return total/(255*xshape*yshape)
-
-def replaceSVG(svgNew, svgOld):
-    backedUp = False
-    try:
-        newFilePath = archivePath + '/' + svgOld.split("/")[-1][:-5] + '_' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S")+".tiff"
-        os.rename(svgOld, newFilePath)
-        print("Old svg backed up as " + newFilePath)
-        writeToLog("Old svg backed up as " + newFilePath)
-        backedUp = True
-    except:
-        print("Could not backup file " + svgOld)
-        writeToLog("Failure to backup file " + svgOld + " to " + newFilePath)
-    if backedUp:
-        newFileInPlace = False
-        try:
-            newFilePath2 = svgsPath + '/' + "L1_CAM_" + svgNew.split("/")[-1].split("_")[0] + ".svg"
-            os.rename(svgNew, newFilePath2)
-            print("New svg put in place as " + newFilePath2)
-            writeToLog("New svg successfully put in place as " + newFilePath2)
-            return True
-        except:
-            print("Could not put new SVG file in place as " + newFilePath2)
-            writeToLog("Failure to rename file " + svgNew + ' to ' + newFilePath2)
-            return False
-            
-    else:
-        return False
         
-def replaceReferenceSVG(svgNew, svgOld):
-    backedUp = False
-    try:
-        newFilePath = archivePath + '/' + svgOld.split("/")[-1][:-4] + '_' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S")+".svg"
-        os.rename(svgOld, newFilePath)
-        print("Old svg backed up as " + newFilePath)
-        writeToLog("Old svg backed up as " + newFilePath)
-        backedUp = True
-    except:
-        print("Could not backup file " + svgOld)
-        writeToLog("Failure to backup file " + svgOld + " to " + newFilePath)
-    if backedUp:
-        newFileInPlace = False
-        try:
-            newFilePath2 = svgsPath + '/' + "L1_CAM_" + svgNew.split("/")[-1].split("_")[0] + ".svg"
-            os.rename(svgNew, newFilePath2)
-            print("New svg put in place as " + newFilePath2)
-            writeToLog("New svg successfully put in place as " + newFilePath2)
-            return True
-        except:
-            print("Could not put new SVG file in place as " + newFilePath2)
-            writeToLog("Failure to rename file " + svgNew + ' to ' + newFilePath2)
-            return False
-            
-    else:
-        return False
-  
-def replaceReferenceTiff(tiffNew, tiffOld, camera):
-    backedUp = False
-    try:
-        newFilePath = archivePath + '/' + tiffOld.split("/")[-1] + '_' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S") +".bak"
-        os.rename(tiffOld, newFilePath)
-        print("Old reference tiff backed up as " + newFilePath)
-        writeToLog("Old reference tiff backed up as " + newFilePath)
-        backedUp = True
-    except:
-        print("Could not backup file " + tiffOld)
-        writeToLog("Failure to backup file " + tiffOld + " to " + newFilePath)
-    if backedUp:
-        newFileInPlace = False
-        try:
-            newFilePath2 = defaultPath + '/' + "L1_CAM_" + tiffNew.split("/")[-1]
-            os.rename(tiffNew, newFilePath2)
-            print("New reference tiff put in place as " + newFilePath2)
-            writeToLog("New reference tiff successfully put in place as " + newFilePath2)
-            return True
-        except:
-            print("Could not put new reference tiff file in place as " + newFilePath2)
-            writeToLog("Failure to rename file " + tiffNew + ' to ' + newFilePath2)
-            return False
-            
-    else:
-        return False
- 
-
 def transformPoint(point, params):
     x = params[0]
     y = params[1]
@@ -362,7 +335,7 @@ def writeToLog(message):
             with open("log.txt",'a') as f:
                 f.write(datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ' - ' + message + "\n")
     except:
-        print("Could not open log file!")
+        if verbose: print("Could not open log file!")
 
 def promptUser(validAnswers, ErrorMessage, LogErrorMessage, forcedInput = ''):
     if forcedInput == '':
@@ -372,33 +345,13 @@ def promptUser(validAnswers, ErrorMessage, LogErrorMessage, forcedInput = ''):
     while userAnswer not in validAnswers:
         if userAnswer.lower() == 'exit':
             writeToLog("Program exited by user.")
-            print('bye bye!')
+            if verbose: print('bye bye!')
             os._exit(0)
         elif userAnswer not in validAnswers:
             print(ErrorMessage + " [" + userAnswer + "]")
             writeToLog(LogErrorMessage + " [" + userAnswer + "]")
             userAnswer = input()
     return userAnswer
-
-def replaceReferenceTiff(cameraName, newTiffs):
-    start = datetime.now()
-    if isinstance(newTiffs, list):
-        print("Overlaying Input Images.")
-        newTiff_Original = Image.open(newTiffs[0])
-        for i in range(1,len(newTiffs)):
-            imgTemp = Image.open(newTiffs[i])
-            newTiff_Original = imgOverlay(newTiff_Original, imgTemp)
-    else:
-        newTiff_Original = Image.open(newTiffs)
-    newTiff_Original.show()
-    newTiff_Original.save(defaultPath + '/' + cameraName + '/' + cameraName + "_Original.tiff")
-    newTiff_Clean = cleanPixels(newTiff_Original)
-    newTiff_Clean.show()
-    newTiff_Clean.save(defaultPath + '/' + cameraName + '/' + cameraName + "_Clean.tiff")
-    newTiff_Smoothed = gaussianSmooth(newTiff_Clean, start = start)
-    newTiff_Overlayed = imgOverlay(newTiff_Clean, newTiff_Smoothed)
-    newTiff_Overlayed.save(defaultPath + '/' + cameraName + '/' + cameraName + "_Overlayed.tiff")
-    newTiff_Overlayed.show()
     
 def replaceFiles(filename_Old, filename_New):
     try:
@@ -416,7 +369,7 @@ def backupFile(filename):
         os.system("mv " + filename + " " + filename_new)
         writeToLog("Backed up file \"" + filename + "\" to \"" + filename_new + "\"" )
     except:
-        print("Backup of \"" + filename + "\" has failed!")
+        if verbose: print("Backup of \"" + filename + "\" has failed!")
         writeToLog("Failed to back up file \"" + filename + "\" to \"" + filename_new + "\"")
         exit()
         
@@ -445,8 +398,6 @@ def minimizeDifference(img1, img2, rangex = inixRange, rangey = iniyRange, range
         x = (rangex[1] + rangex[0])/2
         y = (rangey[1] + rangey[0])/2
         th = (rangeth[1] + rangeth[0])/2
-        print("Estimated x,y translation: " + str((x,y)) + " pixels.")
-        print("Estimated rotation: " + str(th) + " radians")
         return rotationMatrix(th).dot(translationMatrix([x,y])), (x,y,th)
     
     xs = [i for i in np.linspace(rangex[0], rangex[1], n)]
@@ -464,7 +415,7 @@ def minimizeDifference(img1, img2, rangex = inixRange, rangey = iniyRange, range
         os.system("clear")
         postHeader = "Minimizing Image Difference.\n - Optimizing Cycles: " + str(cycles+1) + "/" + str(ncycles) + "\n - Least Difference so far: " + str(minDiff) + "\n - Precision: " + str(rangex[1] - rangex[0]) + " Pixels\n"
         pct = 100./(ncycles)*cycles + 100./(ncycles+1)*i/len(transfs)
-        print(progressBar(pct, time0 = start, header = header + postHeader))
+        if verbose: print(progressBar(pct, time0 = start, header = header + postHeader))
         diff = imgDifference(img1, img2.transform(img2.size, Image.AFFINE, matrixToAffine(transfs[i][0])))
         if diff < minDiff:
             minDiff = diff
@@ -543,11 +494,13 @@ def fileTest(file, image = False):
         writeToLog("Could not find file " + file)
         return False
     return True
+
 def clear():
     os.system("clear")
+    
 def exit():
     writeToLog("Program exited by user.")
-    print('bye bye!')
+    if verbose: print('bye bye!')
     os._exit(0)
     
 def overlayImages(images):
@@ -561,7 +514,7 @@ def getReferenceImages(camera):
     try:
         reference_Image_Original = Image.open(reference_Image_Original_name)
         writeToLog("Original Reference Image Successfully Imported + \"" + reference_Image_Original_name + "\"")
-        print("Original Reference Image Successfully Imported!")
+        if verbose: print("Original Reference Image Successfully Imported!")
     except:
         writeToLog("Failed to import Original Reference Image + \"" + reference_Image_Original_name + "\"")
         print("Error! Failed to import Original Reference Image!")
@@ -571,34 +524,40 @@ def getReferenceImages(camera):
     try:
         reference_Image_Overlayed = Image.open(reference_Image_Overlayed_name)
         writeToLog("Overlayed Reference Image Successfully Imported + \"" + reference_Image_Overlayed_name + "\"")
-        print("Overlayed Reference Image Successfully Imported!")
+        if verbose: print("Overlayed Reference Image Successfully Imported!")
     except:
         writeToLog("Failed to import Overlayed Reference Image + \"" + reference_Image_Overlayed_name + "\"")
         print("Error! Failed to import Overlayed Reference Image!")
         exit()
     return reference_Image_Original, reference_Image_Overlayed
 
-def drawImageAndSVG(image, svg, camera):
+def drawImageAndSVG(image, svg, camera, text = ''):
     font = ImageFont.truetype("fonts/arial.ttf", 20)
     cx, cy, r, l1x1, l1y1, l1x2, l1y2, l2x1, l2y1, l2x2, l2y2 = getPointsSVG(svg)
     imgDraw1 = ImageDraw.Draw(image)
     imgDraw1.line((l1x1,l1y1,l1x2,l1y2), fill = 128)
     imgDraw1.line((l2x1,l2y1,l2x2,l2y2), fill = 128)
     imgDraw1.ellipse([cx-r,cy-r,cx+r,cy+r], outline = 128, width = 1)
-    imgDraw1.text((xshape/2,yshape*.1), "Reference (Default) " + camera, font = font, fill = 128)
+    imgDraw1.text((xshape/2,yshape*.1), text + camera, font = font, fill = 128)
     return image
 
 def promptSVGApproval():
-    print("Is the svg matching satisfactory? (y/n)")
-    answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 1 From The User')
+    if args.yes or args.quiet:
+        answer = 'yes'
+    else:
+        print("Is the svg matching satisfactory? (y/n)")
+        answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 1 From The User')
     if answer.lower().startswith('y'):
         return True
     else:
         return False
 
 def promptSVGUpdateApproval():
-    print("Do you wish to replace the current svg file (y/n)? (A backup will be made.)")
-    answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 2 From The User')
+    if args.yes or args.quiet:
+        answer = 'yes'
+    else:
+        print("Do you wish to replace the current svg file (y/n)? (A backup will be made.)")
+        answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 2 From The User')
     if answer.lower().startswith('y'):
         return True
     else:
