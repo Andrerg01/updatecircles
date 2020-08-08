@@ -422,6 +422,7 @@ def rotationMatrix(angle):
 
 def translationMatrix(vec):
     return np.array([[1,0,vec[0]],[0,1,vec[1]],[0,0,1]])
+
 def matrixToAffine(mat):
     a = mat[0][0]
     b = mat[0][1]
