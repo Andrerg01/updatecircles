@@ -16,7 +16,7 @@ Firstly change the paths in the *config.ini* file to the appropriate paths of th
 
 To set up an image and svg pair as a reference for comparison with all future images, type in the command line:
 
-`python updateCircles.py -r -c [Camera Name] -i [Reference Image File #1] [Reference Image File #2] ... -v [Reference svg File]`
+`python updateCircles.py -r -c [Camera Name] -i [Reference Image File #1] [Reference Image File #2] ... -V [Reference svg File]`
 
 **-r** Indicates the program that you are replacing the current reference image and svg files.
    
@@ -24,10 +24,10 @@ To set up an image and svg pair as a reference for comparison with all future im
 
 **-i** Indicates the program that you are about to pass the path of image files as inputs (can be as many as are needed).
    
-**-v** Indicates the program that you are about to pass the path of an svg file.
+**-V** Indicates the program that you are about to pass the path of an svg file.
 
 *Example:*
-`python updatecirCles.py -r -c ITMY4 -i Some/Path/ITMY4_Reference_Image_1.tiff Some/Path/ITMY4_Reference_Image_2.tiff -v Some/Other/Path/ITMY4_Reference_SVG.svg`
+`python updatecirCles.py -r -c ITMY4 -i Some/Path/ITMY4_Reference_Image_1.tiff Some/Path/ITMY4_Reference_Image_2.tiff -V Some/Other/Path/ITMY4_Reference_SVG.svg`
 
 The program will overlay the input images if more than one is passed.
 
@@ -57,6 +57,29 @@ The user will then be presented with a side by side comparison of the reference 
 ### Updating Circles Witout command line options (not recommended)
 
 By simply calling `python updateCircles.py`. The program will prompt the user about what is to be done and which files are needed.
+
+### All Options
+
+**-c** Indicates the program which camera you are refering to.
+
+**-h** Help page, essentially the same information displayed here but in different wording.
+
+**-i** Indicates the program that you are about to pass the path of image files as inputs (can be as many as are needed).
+
+**-p** Indicates the program the precision to be used when matching the images. Larger precisions will take longer. Defaulted to the parameter "iniRes" in the file "config.ini".
+
+**-q** Indicates the program to surpress much of the output text, except for inquiries.
+
+**-r** Indicates the program that you are replacing the current reference image and svg files.
+
+**-u** Indicates the program that you are updating circles
+
+**-V** Indicates the program that you are about to pass the path of an svg file.
+
+**-y** Indicates the program that answers to inquiries are always yes, except for except for image matching confirmation
+
+
+
 
 ## Authors
 

@@ -45,11 +45,11 @@ parser.add_argument('-i', '--images', type = str, nargs='+', metavar = '',  help
 parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG file to be processed')
 parser.add_argument('-p', '--precision', type = int, default = iniRes, metavar = '', help = 'Overrides initial precision for image matching from config file')
 parser.add_argument('-q', '--quiet', action = 'store_true', help = 'Option to supress outputs unless necessary.')
-parser.add_argument('-y', '--yes', action = 'store_true', help = 'Automatically responds \"yes\" to any inquiry except for image matching.')
+parser.add_argument('-y', '--yes', action = 'store_true', help = 'Automatically responds \"yes\" to any inquiry except for image matching confirmation.')
 
 actionGroup = parser.add_mutually_exclusive_group()
-actionGroup.add_argument('-u', '--update', action = 'store_true')
-actionGroup.add_argument('-r', '--replace', action = 'store_true')
+actionGroup.add_argument('-u', '--update', action = 'store_true', help = 'Indicates the program that you are updating circles')
+actionGroup.add_argument('-r', '--replace', action = 'store_true', help = 'Indicates the program that you are replacing the current reference image and svg files.')
 
 args = parser.parse_args()
 verbose = not args.quiet
