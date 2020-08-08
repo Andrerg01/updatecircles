@@ -43,8 +43,9 @@ parser = argparse.ArgumentParser(description = 'Processes and Images')
 parser.add_argument('-c', '--camera', type = str, choices = cameras, metavar = '', help = 'The camera to be considered.')
 parser.add_argument('-i', '--images', type = str, nargs='+', metavar = '',  help = 'The image or images to be processed.')
 parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG file to be processed')
-parser.add_argument('-q', '--quiet', action = 'store_true')
-parser.add_argument('-y', '--yes', action = 'store_true')
+parser.add_argument('-p', '--precision', type = int, default = iniRes, metavar = '', help = 'Overrides initial precision for image matching from config file')
+parser.add_argument('-q', '--quiet', action = 'store_true', help = 'Option to supress outputs unless necessary.')
+parser.add_argument('-y', '--yes', action = 'store_true', help = 'Automatically responds \"yes\" to any inquiry except for image matching.')
 
 actionGroup = parser.add_mutually_exclusive_group()
 actionGroup.add_argument('-u', '--update', action = 'store_true')
@@ -359,9 +360,11 @@ def replaceFiles(filename_Old, filename_New):
         oldExists = True
     except:
         oldExists = False
-    if oldExists:
+    if oldExists and filename_Old != filename_New:
         backupFile(filename_Old)
-    os.system("mv " + filename_New + " " + filename_Old)
+        writeToLog("Replacing \"" + filename_Old + "\" with \"" + filename_New)
+        if verbose: print("Replacing \"" + filename_Old + "\" with \"" + filename_New)
+        os.system("mv " + filename_New + " " + filename_Old)
     
 def backupFile(filename):
     try:
@@ -390,7 +393,7 @@ def matrixToAffine(mat):
     f = mat[1][2]
     return (a,b,c,d,e,f)
 
-def minimizeDifference(img1, img2, rangex = inixRange, rangey = iniyRange, rangeth = inithRange, n = iniRes, cycles = 0, start = 0, minDiff = 1, header = ''):
+def minimizeDifference(img1, img2, rangex = inixRange, rangey = iniyRange, rangeth = inithRange, n = args.precision, cycles = 0, start = 0, minDiff = 1, header = ''):
     if cycles == 0:
         start = datetime.now()
     ncycles = cycles + int(np.ceil(np.log(rangex[1]-rangex[0])/(np.log(n/2))))
@@ -553,12 +556,25 @@ def promptSVGApproval():
         return False
 
 def promptSVGUpdateApproval():
-    if args.yes or args.quiet:
-        answer = 'yes'
-    else:
-        print("Do you wish to replace the current svg file (y/n)? (A backup will be made.)")
-        answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 2 From The User')
+    print("Do you wish to replace the current svg file (y/n)? (A backup will be made.)")
+    answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 2 From The User')
     if answer.lower().startswith('y'):
         return True
     else:
         return False
+    
+def promtPrecisionChangeApproval():
+    if verbose: print("Would you like to change the precision of matching and try again?")
+    answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Precision Change Inquiry From The User')
+    if answer.lower().startswith('y'):
+        return True
+    else:
+        return False
+
+def promptPrecision():
+    if verbose: print("What would you like to change the precision to? (current: " + str(args.precision) + ")")
+    ans = eval(input())
+    while not isinstance(ans, int) or ans < 3:
+        print("Please provide an integer answer greater than or equal to 3.")
+        ans = eval(input())
+    return ans

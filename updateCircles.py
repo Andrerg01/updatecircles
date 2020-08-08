@@ -66,46 +66,59 @@ if args.update:
     input_Image_Original = overlayImages(input_Images)
     print("Cleaning Combined Image.")
     input_Image_Clean = cleanPixels(input_Image_Original)
-    reference_Image_Overlayed.show()
-    print("Starting Optimization.")
-    transf, params = minimizeDifference(reference_Image_Overlayed, input_Image_Clean, header = header)
-    header += "Image Optimization Successfull!\n"
-    if verbose: clear(); print(header)
     
-    old_SVG_name = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
-    new_SVG_name = transformSVG(old_SVG_name, args.camera, transf)
-    
-    drawImageAndSVG(reference_Image_Original, old_SVG_name, args.camera, text = "Reference (Target)")
-    drawImageAndSVG(input_Image_Original, new_SVG_name, args.camera, text = "Current (Input)")
-    
-    reference_Image_Original.show()
-    input_Image_Original.show()
-    if verbose: clear(); print(header)
-    approvedSVG = promptSVGApproval()
-    
-    if approvedSVG:
-        writeToLog("Optimization approved by user.")
+    approvedSVG = False
+    while not approvedSVG:
+        print("Starting Optimization.")
+        transf, params = minimizeDifference(reference_Image_Overlayed, input_Image_Clean, header = header, n = args.precision)
+        reference_Image_Original_Drawn = reference_Image_Original.copy()
+        input_Image_Original_Drawn = input_Image_Original.copy()
+        header += "Image Optimization Successfull!\n"
         if verbose: clear(); print(header)
-        approvedSVGUpdate = promptSVGUpdateApproval()
-        if approvedSVGUpdate:
-            writeToLog("SVG replacement approved by the user.")
+
+        old_SVG_name = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
+        new_SVG_name = transformSVG(old_SVG_name, args.camera, transf)
+
+        drawImageAndSVG(reference_Image_Original_Drawn, old_SVG_name, args.camera, text = "Reference (Target)")
+        drawImageAndSVG(input_Image_Original_Drawn, new_SVG_name, args.camera, text = "Current (Input)")
+        reference_Image_Original_Drawn.show()
+        input_Image_Original_Drawn.show()
+
+        if verbose: clear(); print(header)
+        approvedSVG = promptSVGApproval()
+
+        if approvedSVG:
+            writeToLog("Optimization approved by user.")
             if verbose: clear(); print(header)
-            old_SVG_name = svgsPath + "/L1_CAM_" + args.camera + ".svg"
-            if not (args.yes or args.quiet):
-                print("The file to be replaced is \"" + oldSVG_Name + "\"\nPress Enter to continue or specify correct file name.")
-                alt_svg_Name = confirmVector(input(), bypass = '')
-                if alt_svg_Name != '':
-                    old_SVG_name = alt_svg_Name
-            
-            replaceFiles(old_SVG_name, new_SVG_name)
-            
+            approvedSVGUpdate = promptSVGUpdateApproval()
+            if approvedSVGUpdate:
+                writeToLog("SVG replacement approved by the user.")
+                if verbose: clear(); print(header)
+                old_SVG_name = svgsPath + "/L1_CAM_" + args.camera + ".svg"
+                if not (args.yes or args.quiet):
+                    print("The file to be replaced is \"" + oldSVG_Name + "\"\nPress Enter to continue or specify correct file name.")
+                    alt_svg_Name = confirmVector(input(), bypass = '')
+                    if alt_svg_Name != '':
+                        old_SVG_name = alt_svg_Name
+
+                replaceFiles(old_SVG_name, new_SVG_name)
+
+            else:
+                writeToLog("SVG replacement not approved by the user.")
+                exit()        
         else:
-            writeToLog("SVG replacement not approved by the user.")
-            exit()        
-    else:
-        writeToLog("Optimization not approved by user.")
-        exit()
-    
+            writeToLog("Optimization not approved by user.")
+            precisionChangeApproval = True
+            if verbose and not args.yes:
+                precisionChangeApproval = promtPrecisionChangeApproval()
+            if precisionChangeApproval:
+                if verbose:
+                    args.precision = promptPrecision()
+                else:
+                    args.precision = args.precision + 1
+            else:
+                exit()
+
 #These commands will only happen if the user is replacing the reference images/svgs
 elif args.replace:
     #If no svg file is specified, the user will be prompted to it
@@ -146,8 +159,7 @@ elif args.replace:
 
     newSVGName = args.vector
     oldSVGName = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
-    if newSVGName != oldSVGName:
-        replaceFiles(oldSVGName, newSVGName)
+    replaceFiles(oldSVGName, newSVGName)
 
 
 else:
