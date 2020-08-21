@@ -520,3 +520,61 @@
 2020-08-21-15-54-24 - Input Images: 'Test_Images/ETMY_test_this.tiff'
 2020-08-21-15-54-24 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
 2020-08-21-15-54-24 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
+----------------------------------------------------------------
+2020-08-21-15-57-49 - Program initialized.
+----------------------------------------------------------------
+2020-08-21-16-31-31 - Program initialized.
+2020-08-21-16-31-31 - Circle Update Request Made.
+2020-08-21-16-31-31 - Camera selected: ITMY
+2020-08-21-16-31-31 - Inferred File Path Test_Images/L1_CAM_ITMY_test_0.tiff
+2020-08-21-16-31-31 - Input Images: 'Test_Images/L1_CAM_ITMY_test_0.tiff'
+2020-08-21-16-31-31 - Original Reference Image Successfully Imported + "Reference_Images/ITMY/ITMY_Original.tiff"
+2020-08-21-16-31-31 - Overlayed Reference Image Successfully Imported + "Reference_Images/ITMY/ITMY_Overlayed.tiff"
+2020-08-21-16-34-18 - Optimization approved by user.
+2020-08-21-16-34-19 - SVG replacement approved by the user.
+2020-08-21-16-34-21 - Backed up file "svg_Destination/L1_CAM_ITMY.svg" to "archive/L1_CAM_ITMY_2020-08-21-16-34-21svg"
+2020-08-21-16-34-21 - Replacing "svg_Destination/L1_CAM_ITMY.svg" with "temp/ITMY_temp.svg
+----------------------------------------------------------------
+2020-08-21-16-41-08 - Program initialized.
+2020-08-21-16-41-08 - Circle Update Request Made.
+2020-08-21-16-41-08 - Camera selected: ETMX
+2020-08-21-16-41-08 - Inferred File Path Test_Images/L1_CAM_ETMX_test_0.tiff
+2020-08-21-16-41-08 - Input Images: 'Test_Images/L1_CAM_ETMX_test_0.tiff'
+2020-08-21-16-41-08 - Original Reference Image Successfully Imported + "Reference_Images/ETMX/ETMX_Original.tiff"
+2020-08-21-16-41-08 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMX/ETMX_Overlayed.tiff"
+2020-08-21-16-43-45 - Optimization approved by user.
+2020-08-21-16-43-46 - SVG replacement approved by the user.
+2020-08-21-16-43-47 - Backed up file "svg_Destination/L1_CAM_ETMX.svg" to "archive/L1_CAM_ETMX_2020-08-21-16-43-47svg"
+2020-08-21-16-43-47 - Replacing "svg_Destination/L1_CAM_ETMX.svg" with "temp/ETMX_temp.svg
+----------------------------------------------------------------
+2020-08-21-16-44-51 - Program initialized.
+2020-08-21-16-44-51 - Circle Update Request Made.
+2020-08-21-16-44-51 - Camera selected: ETMY
+2020-08-21-16-44-51 - Inferred File Path Test_Images/L1_CAM_ETMy_test_this.tiff
+2020-08-21-16-44-51 - Could not find file Test_Images/L1_CAM_ETMy_test_this.tiff
+2020-08-21-16-44-51 - Could not find file Test_Images/L1_CAM_ETMy_test_this.tiff
+2020-08-21-16-44-57 - Inferred File Path Test_Images/exit
+2020-08-21-16-44-57 - Inferred File Path Test_Images/exit
+2020-08-21-16-44-57 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-16-45-02 - Program initialized.
+2020-08-21-16-45-02 - Circle Update Request Made.
+2020-08-21-16-45-02 - Camera selected: ETMY
+2020-08-21-16-45-02 - Inferred File Path Test_Images/L1_CAM_ETMY_test_this.tiff
+2020-08-21-16-45-02 - Could not find file Test_Images/L1_CAM_ETMY_test_this.tiff
+2020-08-21-16-45-02 - Could not find file Test_Images/L1_CAM_ETMY_test_this.tiff
+2020-08-21-16-45-05 - Inferred File Path Test_Images/exit
+2020-08-21-16-45-05 - Inferred File Path Test_Images/exit
+2020-08-21-16-45-05 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-16-45-22 - Program initialized.
+2020-08-21-16-45-22 - Circle Update Request Made.
+2020-08-21-16-45-22 - Camera selected: ETMY
+2020-08-21-16-45-22 - Inferred File Path Test_Images/ETMY_test_this.tiff
+2020-08-21-16-45-22 - Input Images: 'Test_Images/ETMY_test_this.tiff'
+2020-08-21-16-45-22 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
+2020-08-21-16-45-22 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
+2020-08-21-16-47-38 - Optimization approved by user.
+2020-08-21-16-47-40 - SVG replacement approved by the user.
+2020-08-21-16-47-42 - Backed up file "svg_Destination/L1_CAM_ETMY.svg" to "archive/L1_CAM_ETMY_2020-08-21-16-47-42svg"
+2020-08-21-16-47-42 - Replacing "svg_Destination/L1_CAM_ETMY.svg" with "temp/ETMY_temp.svg

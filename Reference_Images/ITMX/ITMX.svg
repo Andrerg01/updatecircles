@@ -12,7 +12,7 @@
    id="svg3402"
    version="1.1"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="L1-CAM-ITMX4.svg">
+   sodipodi:docname="L1-CAM-ITMX.svg">
   <metadata
      id="metadata3414">
     <rdf:RDF>
@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,34 +37,34 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
-     inkscape:window-height="1411"
+     inkscape:window-height="1331"
      id="namedview3410"
      showgrid="false"
-     inkscape:zoom="2.43125"
-     inkscape:cx="371.50824"
-     inkscape:cy="129.74843"
-     inkscape:window-x="2560"
-     inkscape:window-y="0"
+     inkscape:zoom="2.4208333"
+     inkscape:cx="320"
+     inkscape:cy="240"
+     inkscape:window-x="0"
+     inkscape:window-y="31"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg3402" />
   <circle
-     cx="293.95001"
-     cy="222.04999"
+     cx="288.60001"
+     cy="235.09999"
      id="circle3404"
-     style="fill:none;stroke:#ff0000;stroke-width:2.69561434"
-     r="152.3022" />
+     style="fill:none;stroke:#ff0000;stroke-width:2.73157907"
+     r="154.33421" />
   <line
-     x1="283.95001"
-     y1="222.04999"
-     x2="303.95001"
-     y2="222.04999"
+     x1="278.60001"
+     y1="235.09999"
+     x2="298.60001"
+     y2="235.09999"
      style="stroke:#ff0000;stroke-width:2"
      id="line3406" />
   <line
-     x1="293.95001"
-     y1="212.04999"
-     x2="293.95001"
-     y2="232.04997"
+     x1="288.60001"
+     y1="225.10001"
+     x2="288.60001"
+     y2="245.09998"
      style="stroke:#ff0000;stroke-width:2"
      id="line3408" />
 </svg>

@@ -39,7 +39,7 @@ svgsPath = config["Configurations"]["svgsPath"]
 try:
     version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
 except:
-    version = '1.0.0-12'
+    version = '1.0.0-13'
 author = config["Configurations"]["author"]
 
 #Defining arguments
@@ -237,35 +237,13 @@ def getPointsSVG(svgFilename):
 
 def transformSVG(svgFilename, cameraName, transf):
     cx, cy, r, l1x1, l1y1, l1x2, l1y2, l2x1, l2y1, l2x2, l2y2 = getPointsSVG(svgFilename)
-    """
-    cx = cx - xshape/2
-    cy = -cy + yshape/2
-    l1x1 = l1x1 - xshape/2
-    l1y1 = -l1y1 + yshape/2
-    l1x2 = l1x2 - xshape/2
-    l1y2 = -l1y2 + yshape/2
-    l2x1 = l2x1 - xshape/2
-    l2y1 = -l2y1 + yshape/2
-    l2x2 = l2x2 - xshape/2
-    l2y2 = -l2y2 + yshape/2
-    """
+    
     cx, cy = (transf@np.array([cx,cy,1]))[:2]
     l1x1, l1y1 = (transf@np.array([l1x1, l1y1,1]))[:2]
     l1x2, l1y2 = (transf@np.array([l1x2, l1y2,1]))[:2]
     l2x1, l2y1 = (transf@np.array([l2x1, l2y1,1]))[:2]
     l2x2, l2y2 = (transf@np.array([l2x2, l2y2,1]))[:2]
-    """
-    cx = cx + xshape/2
-    cy = -cy + yshape/2
-    l1x1 = l1x1 + xshape/2
-    l1y1 = -l1y1 + yshape/2
-    l1x2 = l1x2 + xshape/2
-    l1y2 = -l1y2 + yshape/2
-    l2x1 = l2x1 + xshape/2
-    l2y1 = -l2y1 + yshape/2
-    l2x2 = l2x2 + xshape/2
-    l2y2 = -l2y2 + yshape/2
-    """
+
     with open(svgFilename, 'r') as f:
         lines = f.read().split("\n")
     
@@ -275,9 +253,9 @@ def transformSVG(svgFilename, cameraName, transf):
         foundl1x2 = False
         foundl1y2 = False
         for line in lines:
-            if '     cx=' in line:
+            if '     cx=' in line and 'inkscape' not in line:
                 f.write("     cx=\""+str("%0.2f" % cx)+"\"\n")
-            elif '     cy=' in line:
+            elif '     cy=' in line and 'inkscape' not in line:
                 f.write("     cy=\""+str("%0.2f" % cy)+"\"\n")
             elif '     x1=' in line:
                 if not foundl1x1:

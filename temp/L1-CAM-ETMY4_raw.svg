@@ -12,7 +12,7 @@
    id="svg3383"
    version="1.1"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="L1-CAM-ITMY.svg">
+   sodipodi:docname="L1-CAM-ETMY.svg">
   <metadata
      id="metadata3395">
     <rdf:RDF>
@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,34 +37,39 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
-     inkscape:window-height="1331"
+     inkscape:window-height="1411"
      id="namedview3391"
      showgrid="false"
-     inkscape:zoom="2.5875"
-     inkscape:cx="245.41063"
-     inkscape:cy="240"
-     inkscape:window-x="0"
-     inkscape:window-y="31"
+     inkscape:zoom="2.4208333"
+     inkscape:cx="320"
+     inkscape:cy="225.55337"
+     inkscape:window-x="2560"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg3383" />
-  <line
-     x1="319.19418"
-     y1="229.3"
-     x2="299.40579"
-     y2="229.3"
-     style="stroke:#ff0300;stroke-width:1.97883797;stroke-opacity:1"
-     id="line3387" />
-  <line
-     x1="309.29999"
-     y1="219.40581"
-     x2="309.29999"
-     y2="239.1942"
-     style="stroke:#ff0300;stroke-width:1.97883797;stroke-opacity:1"
-     id="line3389" />
+     inkscape:current-layer="svg3383">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1804" />
+  </sodipodi:namedview>
   <circle
-     style="opacity:1;fill:none;fill-opacity:1;stroke:#f3f902;stroke-width:1.51632524;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     id="path148"
-     cx="309.29999"
-     cy="229.3"
-     r="147.04184" />
+     cx="416.10001"
+     cy="226.59999"
+     id="circle3385"
+     style="fill:none;stroke:#fffb00;stroke-width:1.90699112;stroke-opacity:1"
+     r="149.04651" />
+  <line
+     id="line3387"
+     style="stroke:#ff0e00;stroke-width:1.95591605;stroke-opacity:1"
+     y2="226.39891"
+     x2="410.52545"
+     y1="215.60124"
+     x1="427.47449" />
+  <line
+     id="line3389"
+     style="stroke:#ff0e00;stroke-width:1.95591605;stroke-opacity:1"
+     y2="212.52563"
+     x2="413.60107"
+     y1="229.47453"
+     x1="424.39886" />
 </svg>
+

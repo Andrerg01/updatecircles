@@ -9,12 +9,12 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="480"
    width="640"
-   id="svg3383"
+   id="svg3402"
    version="1.1"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="L1-CAM-ITMY.svg">
+   sodipodi:docname="L1-CAM-ITMX4.svg">
   <metadata
-     id="metadata3395">
+     id="metadata3414">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -26,7 +26,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs3393" />
+     id="defs3412" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -38,33 +38,33 @@
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
      inkscape:window-height="1331"
-     id="namedview3391"
+     id="namedview3410"
      showgrid="false"
-     inkscape:zoom="2.5875"
-     inkscape:cx="245.41063"
+     inkscape:zoom="2.4208333"
+     inkscape:cx="320"
      inkscape:cy="240"
      inkscape:window-x="0"
      inkscape:window-y="31"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg3383" />
-  <line
-     x1="319.19418"
-     y1="229.3"
-     x2="299.40579"
-     y2="229.3"
-     style="stroke:#ff0300;stroke-width:1.97883797;stroke-opacity:1"
-     id="line3387" />
-  <line
-     x1="309.29999"
-     y1="219.40581"
-     x2="309.29999"
-     y2="239.1942"
-     style="stroke:#ff0300;stroke-width:1.97883797;stroke-opacity:1"
-     id="line3389" />
+     inkscape:current-layer="svg3402" />
   <circle
-     style="opacity:1;fill:none;fill-opacity:1;stroke:#f3f902;stroke-width:1.51632524;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     id="path148"
-     cx="309.29999"
-     cy="229.3"
-     r="147.04184" />
+     cx="288.60001"
+     cy="235.09999"
+     id="circle3404"
+     style="fill:none;stroke:#ff0000;stroke-width:2.73157907"
+     r="154.33421" />
+  <line
+     x1="278.60001"
+     y1="235.09999"
+     x2="298.60001"
+     y2="235.09999"
+     style="stroke:#ff0000;stroke-width:2"
+     id="line3406" />
+  <line
+     x1="288.60001"
+     y1="225.10001"
+     x2="288.60001"
+     y2="245.09998"
+     style="stroke:#ff0000;stroke-width:2"
+     id="line3408" />
 </svg>
