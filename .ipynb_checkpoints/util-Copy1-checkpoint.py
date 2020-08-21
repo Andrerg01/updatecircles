@@ -37,7 +37,7 @@ tempPath = config["Configurations"]["tempPath"]
 cameras = config["Configurations"]["cameras"].split(',')
 svgsPath = config["Configurations"]["svgsPath"]
 #version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
-version = '1.0.0-6'
+version = '1.0.0-5'
 author = config["Configurations"]["author"]
 
 #Defining arguments
@@ -117,24 +117,27 @@ def gaussianSmooth(image, start = None, header = ''):
         start = datetime.now()
     #Turns image into 2d array of values
     imarray = np.array(image)
+    img = Image.open("Reference_Images/ETMX3/ETMX3_Original.tiff")
+    img = cleanPixels(img)
+    img_arr = np.array(img)
     x_pts = []
     y_pts = []
-    for i in range(len(imarray)):
-        for j in range(len(imarray[i])):
-            if imarray[i, j] > 0:
+    for i in range(len(img_arr)):
+        for j in range(len(img_arr[i])):
+            if img_arr[i, j] > 0:
                 x_pts += [i]
                 y_pts += [j]
     bw = iniStd*(0.5*xshape + 0.5*yshape)
     #Sample Points
     x_min = 0
     x_max = len(img_arr)-1
-    x_n_bins = len(img_arr)*1j
+    x_bin_size = len(img_arr)*1j
     y_min = 0
     y_max = len(img_arr[0])-1
-    y_n_bins = len(img_arr[0])*1j
+    y_bin_size = len(img_arr[0])*1j
 
     # create grid of sample locations
-    xx, yy = np.mgrid[x_min:x_max:x_n_bins, y_min:y_max:y_n_bins]
+    xx, yy = np.mgrid[x_min:x_max:x_bin_size, y_min:y_max:y_bin_size]
 
     xy_sample = np.vstack([yy.ravel(), xx.ravel()]).T
     xy_train  = np.vstack([y_pts, x_pts]).T
@@ -144,10 +147,15 @@ def gaussianSmooth(image, start = None, header = ''):
 
     z_pts = kde_skl.score_samples(xy_sample)
     z_pts = np.exp(z_pts)
-    gaussianArray = np.reshape(z_pts, xx.shape)
-    gaussianArray = gaussianArray/np.max(gaussianArray.flatten())*iniNormalization
-    img_z = Image.fromarray(gaussianArray)
-    return img_z
+    z_arr = []
+    count = 0
+    zz = np.reshape(z_pts, xx.shape)
+    zz = zz/np.max(zz.flatten())*iniNormalization
+    img_z = Image.fromarray(zz)
+    img_z = imgOverlay(img_z, img)
+    img_Def = Image.open("Reference_Images/ETMX3/ETMX3_Overlayed.tiff")
+    img_Def.show()
+    img_z.show()
 
 def imgOverlay(img1, img2):
     """

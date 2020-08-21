@@ -109,10 +109,10 @@ if args.update:
         else:
             writeToLog("Optimization not approved by user.")
             precisionChangeApproval = True
-            if verbose and not args.yes:
+            if verbose or not args.yes:
                 precisionChangeApproval = promtPrecisionChangeApproval()
             if precisionChangeApproval:
-                if verbose:
+                if verbose or args.yes:
                     args.precision = promptPrecision()
                 else:
                     args.precision = args.precision + 1

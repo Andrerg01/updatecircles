@@ -14,6 +14,8 @@ import configparser
 import subprocess
 #Package to manage passed arguments from the command line
 import argparse
+#Package for Gaussian Smoothing
+from sklearn.neighbors import KernelDensity
 
 #Opening and Reading config file
 config = configparser.ConfigParser()
@@ -34,7 +36,8 @@ shotsPath = config["Configurations"]["shotsPath"]
 tempPath = config["Configurations"]["tempPath"]
 cameras = config["Configurations"]["cameras"].split(',')
 svgsPath = config["Configurations"]["svgsPath"]
-version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
+#version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
+version = '1.0.0-6'
 author = config["Configurations"]["author"]
 
 #Defining arguments
@@ -87,6 +90,7 @@ def gaussianSmooth(image, start = None, header = ''):
     """
     Docstring:
     Smooths an image as if every pixel acts as the peak of a gaussian with standard deviation `iniStd`.
+    Essentially a KDE process.
 
     Parameters
     ----------
@@ -106,8 +110,6 @@ def gaussianSmooth(image, start = None, header = ''):
 
     Notes
     -----
-    Takes very long depending on the number of non-zero pixels (between 30~90 minutes on most images).
-
     Type: method
     """
 
@@ -115,33 +117,37 @@ def gaussianSmooth(image, start = None, header = ''):
         start = datetime.now()
     #Turns image into 2d array of values
     imarray = np.array(image)
-    #Creates an array of zeroes of same shape and dimensions as the image array
-    gaussianArray = np.zeros(imarray.shape)
-    #runs through the image array
-    totalNonZeroes = 0
+    x_pts = []
+    y_pts = []
     for i in range(len(imarray)):
         for j in range(len(imarray[i])):
-            if imarray[i][j] > 0:
-                totalNonZeroes += 1
-    count = 0
-    for i in range(len(imarray)):
-        os.system("clear")
-        postHeader = "Applying Complete Gaussian Smoothing\n"
-        try:
-            pct = 100.*count/totalNonZeroes
-        except:
-            pct = 0
-        if verbose: print(progressBar(pct, time0 = start, header = header + postHeader))
-        for j in range(len(imarray[i])):
-            #If a particular pixel value is non-zero
-            if imarray[i][j] > 0:
-                count += 1
-                #Runs through every pixel of the array of zeroes and calculates the value as if a gaussian peaked at (i,j). Adds that value to the new array.
-                for m in range(len(gaussianArray)):
-                    for n in range(len(gaussianArray[m])):
-                        gaussianArray[m][n] += imarray[i][j]/255*np.exp(-(((m-i)/xshape)**2 + ((n-j)/yshape)**2)/(2*iniStd**2))
-    gaussianArray = gaussianArray/(max(gaussianArray.flatten()))*iniNormalization
-    return Image.fromarray(gaussianArray)
+            if imarray[i, j] > 0:
+                x_pts += [i]
+                y_pts += [j]
+    bw = iniStd*(0.5*xshape + 0.5*yshape)
+    #Sample Points
+    x_min = 0
+    x_max = len(img_arr)-1
+    x_n_bins = len(img_arr)*1j
+    y_min = 0
+    y_max = len(img_arr[0])-1
+    y_n_bins = len(img_arr[0])*1j
+
+    # create grid of sample locations
+    xx, yy = np.mgrid[x_min:x_max:x_n_bins, y_min:y_max:y_n_bins]
+
+    xy_sample = np.vstack([yy.ravel(), xx.ravel()]).T
+    xy_train  = np.vstack([y_pts, x_pts]).T
+
+    kde_skl = KernelDensity(bandwidth = bw)
+    kde_skl.fit(xy_train)
+
+    z_pts = kde_skl.score_samples(xy_sample)
+    z_pts = np.exp(z_pts)
+    gaussianArray = np.reshape(z_pts, xx.shape)
+    gaussianArray = gaussianArray/np.max(gaussianArray.flatten())*iniNormalization
+    img_z = Image.fromarray(gaussianArray)
+    return img_z
 
 def imgOverlay(img1, img2):
     """
@@ -416,7 +422,7 @@ def minimizeDifference(img1, img2, rangex = inixRange, rangey = iniyRange, range
     minDiffArg = 0
     for i in range(len(transfs)):
         os.system("clear")
-        postHeader = "Minimizing Image Difference.\n - Optimizing Cycles: " + str(cycles+1) + "/" + str(ncycles) + "\n - Least Difference so far: " + str(minDiff) + "\n - Precision: " + str(rangex[1] - rangex[0]) + " Pixels\n"
+        postHeader = "Minimizing Image Difference.\n - Optimizing Cycles: " + str(cycles+1) + "/" + str(ncycles) + "\n - Least Difference so far: " + str(minDiff) + "\n - Pixel Range: " + str(rangex[1] - rangex[0]) + " Pixels\n - Precision Number: " + str(n) + '\n'
         pct = 100./(ncycles)*cycles + 100./(ncycles+1)*i/len(transfs)
         if verbose: print(progressBar(pct, time0 = start, header = header + postHeader))
         diff = imgDifference(img1, img2.transform(img2.size, Image.AFFINE, matrixToAffine(transfs[i][0])))
@@ -545,11 +551,8 @@ def drawImageAndSVG(image, svg, camera, text = ''):
     return image
 
 def promptSVGApproval():
-    if args.yes or args.quiet:
-        answer = 'yes'
-    else:
-        print("Is the svg matching satisfactory? (y/n)")
-        answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 1 From The User')
+    print("Is the svg matching satisfactory? (y/n)")
+    answer = promptUser(['y','yes','Y','YES','Yes','n','no','N','NO','No'], 'Answer not recognized, please try again', 'Uncertain Approval or Disproval for Answer 1 From The User')
     if answer.lower().startswith('y'):
         return True
     else:
