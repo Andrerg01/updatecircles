@@ -52,24 +52,24 @@
        id="grid1804" />
   </sodipodi:namedview>
   <circle
-     cx="208.03"
-     cy="338.58"
+     cx="441.11"
+     cy="226.59"
      id="circle3385"
      style="fill:none;stroke:#fffb00;stroke-width:1.90699112;stroke-opacity:1"
      r="149.04651" />
   <line
      id="line3387"
      style="stroke:#ff0e00;stroke-width:1.95591605;stroke-opacity:1"
-     y2="333.92"
-     x2="204.97"
-     y1="341.49"
-     x1="223.59"
+     y2="226.38"
+     x2="435.53"
+     y1="215.61"
+     x1="452.50" />
   <line
      id="line3389"
      style="stroke:#ff0e00;stroke-width:1.95591605;stroke-opacity:1"
-     y2="328.40"
-     x2="218.07"
-     y1="347.01"
-     x1="210.49"
+     y2="212.51"
+     x2="438.63"
+     y1="229.48"
+     x1="449.40" />
 </svg>
 

@@ -49,7 +49,6 @@ parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG 
 parser.add_argument('-p', '--precision', type = int, default = iniRes, metavar = '', help = 'Overrides initial precision for image matching from config file')
 parser.add_argument('-q', '--quiet', action = 'store_true', help = 'Option to supress outputs unless necessary.')
 parser.add_argument('-y', '--yes', action = 'store_true', help = 'Automatically responds \"yes\" to any inquiry except for image matching confirmation.')
-parser.add_argument('-s', '--smooth', action = 'store_true', help = 'Option to enable KDE smoothing on input image before optimization. Only has effect under the -u option.')
 
 actionGroup = parser.add_mutually_exclusive_group()
 actionGroup.add_argument('-u', '--update', action = 'store_true', help = 'Indicates the program that you are updating circles')
@@ -280,29 +279,44 @@ def transformSVG(svgFilename, cameraName, transf):
                 f.write("     cy=\""+str("%0.2f" % cy)+"\"\n")
             elif '     x1=' in line:
                 if not foundl1x1:
-                    f.write("     x1=\""+str("%0.2f" % l1x1)+"\"\n")
+                    f.write("     x1=\""+str("%0.2f" % l1x1)+"\"")
                     foundl1x1 = True
                 else:
-                    f.write("     x1=\""+str("%0.2f" % l2x1)+"\"\n")
+                    f.write("     x1=\""+str("%0.2f" % l2x1)+"\"")
+                if '/>' in line:
+                    f.write(' />\n')
+                else:
+                    f.write('\n')
             elif '     y1=' in line:
                 if not foundl1y1:
-                    f.write("     y1=\""+str("%0.2f" % l1y1)+"\"\n")
+                    f.write("     y1=\""+str("%0.2f" % l1y1)+"\"")
                     foundl1y1 = True
                 else:
-                    f.write("     y1=\""+str("%0.2f" % l2y1)+"\"\n")
+                    f.write("     y1=\""+str("%0.2f" % l2y1)+"\"")
+                if '/>' in line:
+                    f.write(' />\n')
+                else:
+                    f.write('\n')
             elif '     x2=' in line:
                 if not foundl1x2:
-                    f.write("     x2=\""+str("%0.2f" % l1x2)+"\"\n")
+                    f.write("     x2=\""+str("%0.2f" % l1x2)+"\"")
                     foundl1x2 = True
                 else:
-                    f.write("     x2=\""+str("%0.2f" % l2x2)+"\"\n")
+                    f.write("     x2=\""+str("%0.2f" % l2x2)+"\"")
+                if '/>' in line:
+                    f.write(' />\n')
+                else:
+                    f.write('\n')
             elif '     y2=' in line:
                 if not foundl1y2:
-                    f.write("     y2=\""+str("%0.2f" % l1y2)+"\"\n")
+                    f.write("     y2=\""+str("%0.2f" % l1y2)+"\"")
                     foundl1y2 = True
                 else:
-                    f.write("     y2=\""+str("%0.2f" % l2y2)+"\"\n")
-            
+                    f.write("     y2=\""+str("%0.2f" % l2y2)+"\"")
+                if '/>' in line:
+                    f.write(' />\n')
+                else:
+                    f.write('\n')
             else:
                 f.write(line+"\n")
     return tempPath + "/" + cameraName +"_temp.svg"

@@ -66,10 +66,9 @@ if args.update:
     input_Image_Original = overlayImages(input_Images)
     print("Cleaning Combined Image.")
     input_Image_Clean = cleanPixels(input_Image_Original)
-    if args.smooth:
-        print("Smoothing and Overlaying Input Images.")
-        input_Image_Smooth = gaussianSmooth(input_Image_Clean)
-        input_Image_Clean = overlayImages([input_Image_Clean, input_Image_Smooth])
+    print("Smoothing and Overlaying Input Images.")
+    input_Image_Smooth = gaussianSmooth(input_Image_Clean)
+    input_Image_Clean = overlayImages([input_Image_Clean, input_Image_Smooth])
     approvedSVG = False
     while not approvedSVG:
         print("Starting Optimization.")
@@ -99,7 +98,7 @@ if args.update:
                 if verbose: clear(); print(header)
                 old_SVG_name = svgsPath + "/L1_CAM_" + args.camera + ".svg"
                 if not (args.yes or args.quiet):
-                    print("The file to be replaced is \"" + oldSVG_Name + "\"\nPress Enter to continue or specify correct file name.")
+                    print("The file to be replaced is \"" + old_SVG_name + "\"\nPress Enter to continue or specify correct file name.")
                     alt_svg_Name = confirmVector(input(), bypass = '')
                     if alt_svg_Name != '':
                         old_SVG_name = alt_svg_Name
