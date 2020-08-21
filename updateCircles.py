@@ -66,7 +66,10 @@ if args.update:
     input_Image_Original = overlayImages(input_Images)
     print("Cleaning Combined Image.")
     input_Image_Clean = cleanPixels(input_Image_Original)
-    
+    if args.smooth:
+        print("Smoothing and Overlaying Input Images.")
+        input_Image_Smooth = gaussianSmooth(input_Image_Clean)
+        input_Image_Clean = overlayImages([input_Image_Clean, input_Image_Smooth])
     approvedSVG = False
     while not approvedSVG:
         print("Starting Optimization.")

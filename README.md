@@ -31,8 +31,6 @@ To set up an image and svg pair as a reference for comparison with all future im
 
 The program will overlay the input images if more than one is passed.
 
-This part takes the longest because the program creates a "smoothed" version of the overlayed input images for later use. But it only needs to be done once. It might take form a few minutes to 1+ hours depending on the image.
-
 ## Using the program
 
 ### Updating Circles Witout command line options

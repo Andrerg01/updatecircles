@@ -52,8 +52,8 @@
        id="grid1874" />
   </sodipodi:namedview>
   <circle
-     cx="325.16"
-     cy="268.91"
+     cx="325.26"
+     cy="292.04"
      id="circle3371"
      style="fill:none;stroke:#ff0000;stroke-width:2.12230206"
      r="146.43884" />
@@ -63,17 +63,17 @@
     <line
        id="line3373"
        style="stroke:#ff0000;stroke-width:1.94625568"
-     y2="269.19"
-     x2="339.00"
-     y1="283.40"
-     x1="326.00"
+     y2="292.20"
+     x2="339.10"
+     y1="306.52"
+     x1="326.21"
     <line
        id="line3375"
        style="stroke:#ff0000;stroke-width:1.94625568"
-     y2="269.79"
-     x2="325.39"
-     y1="282.80"
-     x1="339.61"
+     y2="292.92"
+     x2="325.50"
+     y1="305.81"
+     x1="339.82"
   </g>
 </svg>
 

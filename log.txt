@@ -249,3 +249,96 @@
 2020-08-17-14-28-53 - Overlayed Reference Image Successfully Imported + "Reference_Images/ITMY4/ITMY4_Overlayed.tiff"
 ----------------------------------------------------------------
 2020-08-21-08-51-29 - Program initialized.
+----------------------------------------------------------------
+2020-08-21-12-44-12 - Program initialized.
+2020-08-21-12-44-14 - Circle Update Request Made.
+2020-08-21-12-44-22 - Camera selected: ETMY4
+2020-08-21-12-44-39 - Inferred File Path Test_Images/L1_CAM_ETMY_Test_0.tiff
+2020-08-21-12-44-39 - Inferred File Path Test_Images/exit
+2020-08-21-12-44-39 - Input Images: 'Test_Images/L1_CAM_ETMY_Test_0.tiff'
+2020-08-21-12-44-39 - Original Reference Image Successfully Imported + "Reference_Images/ETMY4/ETMY4_Original.tiff"
+2020-08-21-12-44-39 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY4/ETMY4_Overlayed.tiff"
+----------------------------------------------------------------
+2020-08-21-12-45-27 - Program initialized.
+2020-08-21-12-45-27 - Circle Update Request Made.
+2020-08-21-12-45-27 - Camera selected: ETMY4
+2020-08-21-12-45-27 - Inferred File Path Test_Images/L1_CAM_ETMY_Test_0.tiff
+2020-08-21-12-45-27 - Input Images: 'Test_Images/L1_CAM_ETMY_Test_0.tiff'
+2020-08-21-12-45-27 - Original Reference Image Successfully Imported + "Reference_Images/ETMY4/ETMY4_Original.tiff"
+2020-08-21-12-45-27 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY4/ETMY4_Overlayed.tiff"
+2020-08-21-12-47-37 - Optimization approved by user.
+2020-08-21-12-47-38 - SVG replacement not approved by the user.
+2020-08-21-12-47-38 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-12-47-50 - Program initialized.
+2020-08-21-12-47-50 - Circle Update Request Made.
+2020-08-21-12-47-50 - Camera selected: ITMX4
+2020-08-21-12-47-50 - Inferred File Path Test_Images/L1_CAM_ITMX_Test_0.tiff
+2020-08-21-12-47-50 - Input Images: 'Test_Images/L1_CAM_ITMX_Test_0.tiff'
+2020-08-21-12-47-50 - Original Reference Image Successfully Imported + "Reference_Images/ITMX4/ITMX4_Original.tiff"
+2020-08-21-12-47-50 - Overlayed Reference Image Successfully Imported + "Reference_Images/ITMX4/ITMX4_Overlayed.tiff"
+2020-08-21-12-50-08 - Optimization not approved by user.
+2020-08-21-12-50-09 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-12-50-23 - Program initialized.
+2020-08-21-12-50-23 - Circle Update Request Made.
+2020-08-21-12-50-23 - Camera selected: ETMX3
+2020-08-21-12-50-23 - Inferred File Path Test_Images/L1_CAM_ETMX_Test_0.tiff
+2020-08-21-12-50-23 - Input Images: 'Test_Images/L1_CAM_ETMX_Test_0.tiff'
+2020-08-21-12-50-23 - Original Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Original.tiff"
+2020-08-21-12-50-23 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Overlayed.tiff"
+2020-08-21-12-52-32 - Optimization approved by user.
+2020-08-21-12-52-32 - SVG replacement not approved by the user.
+2020-08-21-12-52-32 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-12-52-57 - Program initialized.
+2020-08-21-12-52-57 - Circle Update Request Made.
+2020-08-21-12-52-57 - Camera selected: ETMY4
+2020-08-21-12-52-57 - Inferred File Path Test_Images/L1_CAM_ETMY_Test_0.tiff
+2020-08-21-12-52-57 - Input Images: 'Test_Images/L1_CAM_ETMY_Test_0.tiff'
+2020-08-21-12-52-57 - Original Reference Image Successfully Imported + "Reference_Images/ETMY4/ETMY4_Original.tiff"
+2020-08-21-12-52-57 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY4/ETMY4_Overlayed.tiff"
+2020-08-21-12-55-05 - Optimization approved by user.
+2020-08-21-12-55-06 - SVG replacement not approved by the user.
+2020-08-21-12-55-06 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-12-56-05 - Program initialized.
+2020-08-21-12-56-05 - Circle Update Request Made.
+2020-08-21-12-56-05 - Camera selected: ITMX4
+2020-08-21-12-56-05 - Inferred File Path Test_Images/L1_CAM_ITMX_Test_0.tiff
+2020-08-21-12-56-05 - Input Images: 'Test_Images/L1_CAM_ITMX_Test_0.tiff'
+2020-08-21-12-56-05 - Original Reference Image Successfully Imported + "Reference_Images/ITMX4/ITMX4_Original.tiff"
+2020-08-21-12-56-05 - Overlayed Reference Image Successfully Imported + "Reference_Images/ITMX4/ITMX4_Overlayed.tiff"
+2020-08-21-12-58-16 - Optimization not approved by user.
+2020-08-21-12-58-17 - Uncertain Approval or Disproval for Precision Change Inquiry From The User []
+2020-08-21-12-58-21 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-12-58-32 - Program initialized.
+2020-08-21-12-58-32 - Circle Update Request Made.
+2020-08-21-12-58-32 - Camera selected: ETMX3
+2020-08-21-12-58-32 - Inferred File Path Test_Images/L1_CAM_ETMX_Test_0.tiff
+2020-08-21-12-58-32 - Input Images: 'Test_Images/L1_CAM_ETMX_Test_0.tiff'
+2020-08-21-12-58-32 - Original Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Original.tiff"
+2020-08-21-12-58-32 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Overlayed.tiff"
+2020-08-21-13-00-48 - Optimization approved by user.
+2020-08-21-13-00-49 - SVG replacement not approved by the user.
+2020-08-21-13-00-49 - Program exited by user.
+----------------------------------------------------------------
+2020-08-21-13-05-53 - Program initialized.
+2020-08-21-13-05-53 - Circle Update Request Made.
+2020-08-21-13-05-53 - Camera selected: ETMX3
+2020-08-21-13-05-53 - Inferred File Path Test_Images/L1_CAM_ETMX_Test_0.tiff
+2020-08-21-13-05-53 - Input Images: 'Test_Images/L1_CAM_ETMX_Test_0.tiff'
+2020-08-21-13-05-53 - Original Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Original.tiff"
+2020-08-21-13-05-53 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Overlayed.tiff"
+----------------------------------------------------------------
+2020-08-21-13-06-19 - Program initialized.
+2020-08-21-13-06-19 - Circle Update Request Made.
+2020-08-21-13-06-19 - Camera selected: ETMX3
+2020-08-21-13-06-19 - Inferred File Path Test_Images/L1_CAM_ETMX_Test_0.tiff
+2020-08-21-13-06-19 - Input Images: 'Test_Images/L1_CAM_ETMX_Test_0.tiff'
+2020-08-21-13-06-19 - Original Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Original.tiff"
+2020-08-21-13-06-19 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMX3/ETMX3_Overlayed.tiff"
+2020-08-21-13-08-53 - Optimization approved by user.
+2020-08-21-13-08-54 - SVG replacement not approved by the user.
+2020-08-21-13-08-54 - Program exited by user.

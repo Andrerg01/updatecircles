@@ -49,6 +49,7 @@ parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG 
 parser.add_argument('-p', '--precision', type = int, default = iniRes, metavar = '', help = 'Overrides initial precision for image matching from config file')
 parser.add_argument('-q', '--quiet', action = 'store_true', help = 'Option to supress outputs unless necessary.')
 parser.add_argument('-y', '--yes', action = 'store_true', help = 'Automatically responds \"yes\" to any inquiry except for image matching confirmation.')
+parser.add_argument('-s', '--smooth', action = 'store_true', help = 'Option to enable KDE smoothing on input image before optimization. Only has effect under the -u option.')
 
 actionGroup = parser.add_mutually_exclusive_group()
 actionGroup.add_argument('-u', '--update', action = 'store_true', help = 'Indicates the program that you are updating circles')
@@ -124,17 +125,17 @@ def gaussianSmooth(image, start = None, header = ''):
             if imarray[i, j] > 0:
                 x_pts += [i]
                 y_pts += [j]
-    bw = iniStd*(0.5*xshape + 0.5*yshape)
+    bw = iniStd * (0.5 * xshape + 0.5 * yshape)
     #Sample Points
     x_min = 0
-    x_max = len(img_arr)-1
-    x_n_bins = len(img_arr)*1j
+    x_max = len(imarray) - 1
+    x_n_bins = len(imarray) * 1j
     y_min = 0
-    y_max = len(img_arr[0])-1
-    y_n_bins = len(img_arr[0])*1j
+    y_max = len(imarray[0]) - 1
+    y_n_bins = len(imarray[0]) * 1j
 
     # create grid of sample locations
-    xx, yy = np.mgrid[x_min:x_max:x_n_bins, y_min:y_max:y_n_bins]
+    xx, yy = np.mgrid[x_min : x_max : x_n_bins, y_min : y_max : y_n_bins]
 
     xy_sample = np.vstack([yy.ravel(), xx.ravel()]).T
     xy_train  = np.vstack([y_pts, x_pts]).T
@@ -145,7 +146,7 @@ def gaussianSmooth(image, start = None, header = ''):
     z_pts = kde_skl.score_samples(xy_sample)
     z_pts = np.exp(z_pts)
     gaussianArray = np.reshape(z_pts, xx.shape)
-    gaussianArray = gaussianArray/np.max(gaussianArray.flatten())*iniNormalization
+    gaussianArray = gaussianArray / np.max(gaussianArray.flatten()) * iniNormalization
     img_z = Image.fromarray(gaussianArray)
     return img_z
 
