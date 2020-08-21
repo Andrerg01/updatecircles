@@ -37,7 +37,7 @@ tempPath = config["Configurations"]["tempPath"]
 cameras = config["Configurations"]["cameras"].split(',')
 svgsPath = config["Configurations"]["svgsPath"]
 #version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
-version = '1.0.0-6'
+version = '1.0.0-7'
 author = config["Configurations"]["author"]
 
 #Defining arguments
