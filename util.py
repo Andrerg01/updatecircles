@@ -44,7 +44,7 @@ author = config["Configurations"]["author"]
 parser = argparse.ArgumentParser(description = 'Processes and Images')
 
 parser.add_argument('-c', '--camera', type = str, choices = cameras, metavar = '', help = 'The camera to be considered.')
-parser.add_argument('-i', '--images', type = str, nargs='+', metavar = '',  help = 'The image or images to be processed.')
+parser.add_argument('-i', '--images', type = str, nargs = '+', metavar = '',  help = 'The image or images to be processed.')
 parser.add_argument('-V', '--vector', type = str, metavar = '', help = 'The SVG file to be processed')
 parser.add_argument('-p', '--precision', type = int, default = iniRes, metavar = '', help = 'Overrides initial precision for image matching from config file')
 parser.add_argument('-q', '--quiet', action = 'store_true', help = 'Option to supress outputs unless necessary.')

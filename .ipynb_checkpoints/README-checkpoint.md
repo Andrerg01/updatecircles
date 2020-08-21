@@ -76,7 +76,7 @@ By simply calling `python updateCircles.py`. The program will prompt the user ab
 
 **-y** Indicates the program that answers to inquiries are always yes, except for except for image matching confirmation
 
-
+**-s** Indicates the program that a gaussian smoothing is to be applied to the input image before minimization. Only has an effect with the -u option but is not tethered to it.
 
 
 ## Authors
