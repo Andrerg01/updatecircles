@@ -36,8 +36,10 @@ shotsPath = config["Configurations"]["shotsPath"]
 tempPath = config["Configurations"]["tempPath"]
 cameras = config["Configurations"]["cameras"].split(',')
 svgsPath = config["Configurations"]["svgsPath"]
-#version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
-version = '1.0.0-7'
+try:
+    version = str(subprocess.check_output(["git", "describe"]).strip())[2:-1]
+except:
+    version = '1.0.0-12'
 author = config["Configurations"]["author"]
 
 #Defining arguments
@@ -380,9 +382,14 @@ def replaceFiles(filename_Old, filename_New):
         open(filename_Old, 'r')
         oldExists = True
     except:
-        oldExists = False
+        oldExists = False        
     if oldExists and filename_Old != filename_New:
         backupFile(filename_Old)
+        writeToLog("Replacing \"" + filename_Old + "\" with \"" + filename_New)
+        if verbose: print("Replacing \"" + filename_Old + "\" with \"" + filename_New)
+        os.system("mv " + filename_New + " " + filename_Old)
+    elif not oldExists:
+        print("No Old files to backup.")
         writeToLog("Replacing \"" + filename_Old + "\" with \"" + filename_New)
         if verbose: print("Replacing \"" + filename_Old + "\" with \"" + filename_New)
         os.system("mv " + filename_New + " " + filename_Old)

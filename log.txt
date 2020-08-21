@@ -475,3 +475,48 @@
 2020-08-21-15-27-24 - Input Images: 'Test_Images/ETMY_test_this.tiff'
 2020-08-21-15-27-24 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
 2020-08-21-15-27-24 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
+2020-08-21-15-29-42 - Optimization approved by user.
+2020-08-21-15-29-42 - SVG replacement approved by the user.
+2020-08-21-15-29-43 - Backed up file "svg_Destination/L1_CAM_ETMY.svg" to "archive/L1_CAM_ETMY_2020-08-21-15-29-43svg"
+2020-08-21-15-29-43 - Replacing "svg_Destination/L1_CAM_ETMY.svg" with "temp/ETMY_temp.svg
+----------------------------------------------------------------
+2020-08-21-15-36-30 - Program initialized.
+2020-08-21-15-36-30 - Circle Update Request Made.
+2020-08-21-15-36-30 - Camera selected: ETMY
+2020-08-21-15-36-30 - Inferred File Path Test_Images/ETMY_test_this.tiff
+2020-08-21-15-36-30 - Input Images: 'Test_Images/ETMY_test_this.tiff'
+2020-08-21-15-36-30 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
+2020-08-21-15-36-30 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
+2020-08-21-15-38-51 - Optimization approved by user.
+2020-08-21-15-38-53 - SVG replacement approved by the user.
+2020-08-21-15-38-54 - Backed up file "svg_Destination/L1_CAM_ETMY.svg" to "archive/L1_CAM_ETMY_2020-08-21-15-38-54svg"
+2020-08-21-15-38-54 - Replacing "svg_Destination/L1_CAM_ETMY.svg" with "temp/ETMY_temp.svg
+----------------------------------------------------------------
+2020-08-21-15-40-00 - Program initialized.
+2020-08-21-15-40-00 - Circle Update Request Made.
+2020-08-21-15-40-00 - Camera selected: ETMY
+2020-08-21-15-40-00 - Inferred File Path Test_Images/ETMY_test_this.tiff
+2020-08-21-15-40-00 - Input Images: 'Test_Images/ETMY_test_this.tiff'
+2020-08-21-15-40-00 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
+2020-08-21-15-40-00 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
+2020-08-21-15-42-42 - Optimization approved by user.
+2020-08-21-15-42-44 - SVG replacement approved by the user.
+----------------------------------------------------------------
+2020-08-21-15-48-02 - Program initialized.
+2020-08-21-15-48-02 - Circle Update Request Made.
+2020-08-21-15-48-02 - Camera selected: ETMY
+2020-08-21-15-48-02 - Inferred File Path Test_Images/ETMY_test_this.tiff
+2020-08-21-15-48-02 - Input Images: 'Test_Images/ETMY_test_this.tiff'
+2020-08-21-15-48-02 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
+2020-08-21-15-48-02 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
+2020-08-21-15-50-18 - Optimization approved by user.
+2020-08-21-15-50-20 - SVG replacement approved by the user.
+2020-08-21-15-50-21 - Replacing "../L1_CAM_ETMY.svg" with "temp/ETMY_temp.svg
+----------------------------------------------------------------
+2020-08-21-15-54-23 - Program initialized.
+2020-08-21-15-54-23 - Circle Update Request Made.
+2020-08-21-15-54-24 - Camera selected: ETMY
+2020-08-21-15-54-24 - Inferred File Path Test_Images/ETMY_test_this.tiff
+2020-08-21-15-54-24 - Input Images: 'Test_Images/ETMY_test_this.tiff'
+2020-08-21-15-54-24 - Original Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Original.tiff"
+2020-08-21-15-54-24 - Overlayed Reference Image Successfully Imported + "Reference_Images/ETMY/ETMY_Overlayed.tiff"
