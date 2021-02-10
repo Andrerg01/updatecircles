@@ -16,7 +16,7 @@ Firstly change the paths in the *config.ini* file to the appropriate paths of th
 
 To set up an image and svg pair as a reference for comparison with all future images, type in the command line:
 
-`python updateCircles.py -r -c [Camera Name] -i [Reference Image File #1] [Reference Image File #2] ... -V [Reference svg File]`
+`python3 updateCircles.py -r -c [Camera Name] -i [Reference Image File #1] [Reference Image File #2] ... -V [Reference svg File]`
 
 **-r** Indicates the program that you are replacing the current reference image and svg files.
    
@@ -27,7 +27,7 @@ To set up an image and svg pair as a reference for comparison with all future im
 **-V** Indicates the program that you are about to pass the path of an svg file.
 
 *Example:*
-`python updatecirCles.py -r -c ITMY4 -i Some/Path/ITMY4_Reference_Image_1.tiff Some/Path/ITMY4_Reference_Image_2.tiff -V Some/Other/Path/ITMY4_Reference_SVG.svg`
+`python3 updatecirCles.py -r -c ITMY4 -i Some/Path/ITMY4_Reference_Image_1.tiff Some/Path/ITMY4_Reference_Image_2.tiff -V Some/Other/Path/ITMY4_Reference_SVG.svg`
 
 The program will overlay the input images if more than one is passed.
 
@@ -39,7 +39,7 @@ The program will overlay the input images if more than one is passed.
 
 The "circle update" process can be done thorugh the command line by calling:
 
-`python updateCircles.py -u -c [Camera Name] -i [Image File #1] [Image File #2] ...`
+`python3 updateCircles.py -u -c [Camera Name] -i [Image File #1] [Image File #2] ...`
 
 **-u** Indicates the program that you are updating circles
 
@@ -48,13 +48,13 @@ The "circle update" process can be done thorugh the command line by calling:
 **-i** Indicates the program that you are about to pass the path of image files as inputs (can be as many as are needed).
    
 *Example:*
-`python updateCircles.py -u -c EMTX3 -i Some/Path/Or/Just/The/Name/ETMX3_Snapshot_I_Just_took.tiff`
+`python3 updateCircles.py -u -c EMTX3 -i Some/Path/Or/Just/The/Name/ETMX3_Snapshot_I_Just_took.tiff`
 
 The user will then be presented with a side by side comparison of the reference and inputed images with updated svg files, and prompted to approve and replace the current svg file.
 
 ### Updating Circles Without command line options (not recommended)
 
-By simply calling `python updateCircles.py`. The program will prompt the user about what is to be done and which files are needed.
+By simply calling `python3 updateCircles.py`. The program will prompt the user about what is to be done and which files are needed.
 
 ### All Options
 
