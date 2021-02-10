@@ -96,7 +96,7 @@ if args.update:
             if approvedSVGUpdate:
                 writeToLog("SVG replacement approved by the user.")
                 if verbose: clear(); print(header)
-                old_SVG_name = svgsPath + "/L1_CAM_" + args.camera + ".svg"
+                old_SVG_name = svgsPath + "/L1-CAM-" + args.camera + ".svg"
                 if not (args.yes or args.quiet):
                     print("The file to be replaced is \"" + old_SVG_name + "\"\nPress Enter to continue or specify correct file name.")
                     alt_svg_Name = confirmVector(input(), bypass = '')
