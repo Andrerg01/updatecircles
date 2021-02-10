@@ -146,22 +146,22 @@ elif args.replace:
             newTiffName = tempPath + "/" + args.camera + "_Original_" + str(i) + ".tiff"
             oldTiffName = defaultPath + "/" + args.camera + "/" + args.camera + "_Original_" + str(i) + ".tiff"
             temp.save(newTiffName)
-            replaceFiles(oldTiffName, newTiffName)
+            replaceFiles(oldTiffName, newTiffName, copy = True)
     temp = input_Image_Original
     newTiffName = tempPath + "/" + args.camera + "_Original.tiff"
     oldTiffName = defaultPath + "/" + args.camera + "/" + args.camera + "_Original.tiff"
     temp.save(newTiffName)
-    replaceFiles(oldTiffName, newTiffName)
+    replaceFiles(oldTiffName, newTiffName, copy = True)
     
     temp = input_Image_Overlayed
     newTiffName = tempPath + "/" + args.camera + "_Overlayed.tiff"
     oldTiffName = defaultPath + "/" + args.camera + "/" + args.camera + "_Overlayed.tiff"
     temp.save(newTiffName)
-    replaceFiles(oldTiffName, newTiffName)
+    replaceFiles(oldTiffName, newTiffName, copy = True)
 
     newSVGName = args.vector
     oldSVGName = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
-    replaceFiles(oldSVGName, newSVGName)
+    replaceFiles(oldSVGName, newSVGName, copy. = True)
 
 
 else:
