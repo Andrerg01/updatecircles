@@ -161,7 +161,7 @@ elif args.replace:
 
     newSVGName = args.vector
     oldSVGName = defaultPath + "/" + args.camera + "/" + args.camera + ".svg"
-    replaceFiles(oldSVGName, newSVGName, copy. = True)
+    replaceFiles(oldSVGName, newSVGName, copy = True)
 
 
 else:
