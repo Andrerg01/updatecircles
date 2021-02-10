@@ -355,7 +355,7 @@ def promptUser(validAnswers, ErrorMessage, LogErrorMessage, forcedInput = ''):
             userAnswer = input()
     return userAnswer
     
-def replaceFiles(filename_Old, filename_New):
+def replaceFiles(filename_Old, filename_New, copy = False):
     try:
         open(filename_Old, 'r')
         oldExists = True
@@ -365,12 +365,18 @@ def replaceFiles(filename_Old, filename_New):
         backupFile(filename_Old)
         writeToLog("Replacing \"" + filename_Old + "\" with \"" + filename_New)
         if verbose: print("Replacing \"" + filename_Old + "\" with \"" + filename_New)
-        os.system("mv " + filename_New + " " + filename_Old)
+        if copy:
+            os.system("cp " + filename_New + " " + filename_Old)
+        else:
+            os.system("mv " + filename_New + " " + filename_Old)
     elif not oldExists:
         print("No Old files to backup.")
         writeToLog("Replacing \"" + filename_Old + "\" with \"" + filename_New)
         if verbose: print("Replacing \"" + filename_Old + "\" with \"" + filename_New)
-        os.system("mv " + filename_New + " " + filename_Old)
+        if copy:
+            os.system("cp " + filename_New + " " + filename_Old)
+        else:
+            os.system("mv " + filename_New + " " + filename_Old)
     
 def backupFile(filename):
     try:
