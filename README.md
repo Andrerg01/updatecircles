@@ -39,7 +39,7 @@ The program will overlay the input images if more than one is passed.
 
 The "circle update" process can be done thorugh the command line by calling:
 
-`python updateCircles.py -u -c [Camera Name] -i [Reference Image File #1] [Reference Image File #2] ...`
+`python updateCircles.py -u -c [Camera Name] -i [Image File #1] [Image File #2] ...`
 
 **-u** Indicates the program that you are updating circles
 
