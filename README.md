@@ -52,7 +52,7 @@ The "circle update" process can be done thorugh the command line by calling:
 
 The user will then be presented with a side by side comparison of the reference and inputed images with updated svg files, and prompted to approve and replace the current svg file.
 
-### Updating Circles Witout command line options (not recommended)
+### Updating Circles Without command line options (not recommended)
 
 By simply calling `python updateCircles.py`. The program will prompt the user about what is to be done and which files are needed.
 
